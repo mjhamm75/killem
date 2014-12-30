@@ -2,31 +2,10 @@ var AppConstants = require('../constants/app.constants.js');
 var AppDispatcher = require('../dispatcher/app.dispatcher.js');
 
 var AppActions = {
-	addItem: function(item) {
+	addToPlaylist: function(track) {
 		AppDispatcher.handleViewAction({
-			actionType: AppConstants.ADD_ITEM,
-			item: item
-		});
-	},
-
-	removeItem: function(index) {
-		AppDispatcher.handleViewAction({
-			actionType: AppConstants.REMOVE_ITEM,
-			index: index
-		});
-	},
-
-	increaseItem: function(index) {
-		AppDispatcher.handleViewAction({
-			actionType: AppConstants.INCREASE_ITEM,
-			index: index
-		});
-	},
-
-	decreaseItem: function(index) {
-		AppDispatcher.handleViewAction({
-			actionType: AppConstants.DECREASE_ITEM,
-			index: index
+			actionType: AppConstants.ADD_TO_PLAYLIST,
+			track: track
 		});
 	},
 
@@ -44,10 +23,41 @@ var AppActions = {
 		});
 	},
 
-	login: function(auth) {
+	getMe: function() {
 		AppDispatcher.handleViewAction({
-			actionType: AppConstants.LOGIN,
-			auth: auth
+			actionType: AppConstants.GET_ME
+		});
+	},
+
+	getPlaylists: function() {
+		AppDispatcher.handleViewAction({
+			actionType: AppConstants.GET_PLAYLISTS
+		});
+	},
+
+	createPlaylist: function() {
+		AppDispatcher.handleViewAction({
+			actionType: AppConstants.CREATE_PLAYLIST
+		});
+	},
+
+	getTracks: function() {
+		AppDispatcher.handleViewAction({
+			actionType: AppConstants.GET_TRACKS
+		});
+	},
+
+	login: function() {
+		AppDispatcher.handleViewAction({
+			actionType: AppConstants.LOGIN
+		});
+	},
+
+	removeTrack: function(trackId, position) {
+		AppDispatcher.handleViewAction({
+			actionType: AppConstants.REMOVE_TRACK,
+			trackId: trackId,
+			position: position
 		});
 	}
 };
