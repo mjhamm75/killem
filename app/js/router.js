@@ -1,20 +1,17 @@
-/** @jsx React.DOM */
+import React from 'react';
+import { Router, Route } from 'react-router';
 
-var React = require('react');
-var Router = require('react-router');
-var Routes = Router.Routes;
-var Route = Router.Route;
-require('./stores/app.store.js');
+// require('./stores/app.store.js');
 
 var App = require('./components/login.js');
 var CreatePlaylist = require('./components/create.js');
 var Juking = require('./components/juking.js');
 
-React.renderComponent(
-	<Routes>
-		<Route path="/" handler={App}></Route>
-		<Route path="/create" handler={CreatePlaylist}></Route>
-		<Route path="/juking" handler={Juking}></Route>
-	</Routes>,
+React.render(
+	<Router>
+		<Route path="/" component={App} />
+		<Route path="/create" component={CreatePlaylist} />
+		<Route path="/juking" component={Juking} />
+	</Router>,
 	document.getElementById('example')
 );

@@ -1,11 +1,10 @@
-var Promise = require('es6-promise').Promise;
-var merge = require('react/lib/merge');
+var _ = require('lodash');
 
 var _callbacks = [];
 var _promises = [];
 
 var Dispatcher = function() {};
-Dispatcher.prototype = merge(Dispatcher.prototype, {
+Dispatcher.prototype = _.extend(Dispatcher.prototype, {
 
   /**
    * Register a Store's callback so that it may be invoked by an action.

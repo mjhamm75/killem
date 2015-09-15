@@ -1,6 +1,5 @@
 var AppDispatcher = require('../dispatcher/app.dispatcher.js');
 var AppConstants = require('../constants/app.constants.js');
-var merge = require('react/lib/merge');
 var EventEmitter = require('events').EventEmitter;
 var request = require('superagent');
 var _ = require('lodash');
@@ -143,7 +142,7 @@ function _searchMusic(searchTerm, callback) {
 		});
 }
 
-var AppStore = merge(EventEmitter.prototype, {
+var AppStore = _.extend(EventEmitter.prototype, {
 	emitChange: function() {
 		this.emit(CHANGE_EVENT);
 	},
