@@ -30,7 +30,7 @@ var Playlist = React.createClass({
 				return <li key={song.id}>{song.artist} - {song.name}<button type="button" className="btn btn-warning btn-circle" onClick={that._removeTrack.bind(that, song.id, i)}><i className="glyphicon glyphicon-remove"></i></button></li>;
 			});
 		}
-		return songs ? <ul className="list-unstyled search-results">{songs}</ul>: <div>No songs in list</div>;
+		return songs ? <ul className="list-unstyled search-results">{songs}</ul>: <div>List is empty</div>;
 	}
 });
 
