@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route } from 'react-router';
 
-// require('./stores/app.store.js');
+require('./stores/app.store.js');
 
 var App = require('./components/login.js');
 var CreatePlaylist = require('./components/create.js');
