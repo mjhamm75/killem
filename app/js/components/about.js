@@ -1,11 +1,11 @@
 var React = require('react');
 
-var Login = React.createClass({
+var About = React.createClass({
 	render: function() {
 		return (	
 			<div>About</div>
 		);
-	}
+	}x
 });
 
-module.exports = Login;
+module.exports = About;
