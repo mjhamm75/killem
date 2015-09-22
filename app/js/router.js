@@ -13,11 +13,6 @@ var About = require('./components/about.js');
 
 const store = configureStore();
 
-function login() {
-	console.log('login');
-	debugger;
-}
-
 React.render(
 	<Provider store={store}>
 		{() =>
