@@ -1,61 +1,78 @@
-import * as AppConstants from '../constants/app.constants.js';
+import * as AppConstants from '../constants/app.constants.js';	
+import { isoFetch } from './../utils/fetch.utils.js';
 var AppDispatcher = require('../dispatcher/app.dispatcher.js');
 
 export function addToPlaylist(track) {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.ADD_TO_PLAYLIST,
 		track
-	});
+	}
 }
 
 export function searchMusic(searchTerm) {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.SEARCH_MUSIC,
 		searchTerm
-	});
+	}
 }
 
 export function getDetails(url) {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.GET_DETAILS,
 		url
-	});
+	}
 }
 
 export function getMe() {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.GET_ME
-	});
+	}
 }
 
 export function getPlaylists() {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.GET_PLAYLISTS
-	});
+	}
 }
 
 export function createPlaylist() {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.CREATE_PLAYLIST
-	});
+	}
 }
 
 export function getTracks() {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.GET_TRACKS
-	});
+	}
 }
 
 export function login() {
-	AppDispatcher.handleViewAction({
-		actionType: AppConstants.LOGIN
-	});
+	return dispatch => {
+		dispatch(loginRequest());
+		return isoFetch('/login')
+			.then(response => reponse.json())
+			.then(json => dispatch(loginSuccessful(json)))
+	}
+}
+
+function loginRequest() {
+	return {
+		type: AppConstants.LOGIN_REQUEST
+	}
+}
+
+function loginSuccessful(json) {
+	return {
+		type: AppConstants.LOGIN_SUCCESSFUL,
+		json: json
+	}
 }
 
 export function removeTrack(trackId, position) {
-	AppDispatcher.handleViewAction({
+	return {
 		actionType: AppConstants.REMOVE_TRACK,
 		trackId,
 		position
-	});
+	}
 }
