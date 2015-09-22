@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import * from '../actions/app.actions.js';
+import * as AppConstants from './../actions/app.actions.js';
 
 function playlist(state = [], action) {
   switch (action.type) {
-  case GET_TRACKS:
+  case AppConstants.GET_TRACKS:
     return action.playlist;
   default:
     return state;
@@ -12,15 +12,15 @@ function playlist(state = [], action) {
 
 function user(state = { }, action) {
   switch (action.type) {
-  case LOGIN_REQUEST:
+  case AppConstants.LOGIN_REQUEST:
     return Object.assign({}, state, {
       isFetching: true
     });
-  case LOGIN_SUCCESS:
+  case AppConstants.LOGIN_SUCCESS:
     return Object.assign({}, state, {
       didValidate: true
     });
-  case LOGIN_FAILURE:
+  case AppConstants.LOGIN_FAILURE:
     return Object.assign({}, state, {
       didValidate: false
     });

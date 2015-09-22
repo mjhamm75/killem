@@ -57,12 +57,14 @@ export function login() {
 }
 
 function loginRequest() {
+	console.log('login request')
 	return {
 		type: AppConstants.LOGIN_REQUEST
 	}
 }
 
 function loginSuccessful(json) {
+	console.log('login successful');
 	return {
 		type: AppConstants.LOGIN_SUCCESSFUL,
 		json: json

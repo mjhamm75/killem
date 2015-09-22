@@ -5,7 +5,7 @@ var About = React.createClass({
 		return (	
 			<div>About</div>
 		);
-	}x
+	}
 });
 
 module.exports = About;

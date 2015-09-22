@@ -1,17 +1,18 @@
 var React = require('react');
 var AppActions = require('./../actions/app.actions.js');
+import { login } from './../actions/app.actions.js';
 
 var Login = React.createClass({
-	_handleClick: function() {
-		AppActions.login();
+	login: function() {
+		this.dispatch();
 	},
 
 	render: function() {
 		return (	
-			<div className="flex-container">
+			<div className="flex-container-center">
 				<form>
 					<div className="form-group">
-						<button type="button" className="btn btn-success" onClick={this._handleClick}>Log in to Spotify</button>
+						<button type="button" className="btn btn-success" onClick={this.login}>Log in to Spotify</button>
 					</div>
 				</form>
 			</div>
@@ -19,4 +20,4 @@ var Login = React.createClass({
 	}
 });
 
-module.exports = Login;
+module.exports = Login;	
