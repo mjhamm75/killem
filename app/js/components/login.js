@@ -1,10 +1,10 @@
 var React = require('react');
-var AppActions = require('./../actions/app.actions.js');
-import { login } from './../actions/app.actions.js';
+import * as Actions from './../actions/app.actions.js';
+import { connect } from 'react-redux';
 
 var Login = React.createClass({
 	login: function() {
-		this.dispatch();
+		this.props.dispatch(Actions.login);
 	},
 
 	render: function() {
@@ -20,4 +20,10 @@ var Login = React.createClass({
 	}
 });
 
-module.exports = Login;	
+function mapStateToProps() {
+	return {
+		user: []
+	}
+}
+
+module.exports = connect(mapStateToProps)(Login);	
