@@ -51,7 +51,7 @@ export function login() {
 	return dispatch => {
 		dispatch(loginRequest());
 		return isoFetch('/login')
-			.then(json => dispatch(loginSuccessful(json)))
+			.then(url => dispatch(loginSuccessful(url)))
 	}
 }
 
@@ -61,10 +61,12 @@ function loginRequest() {
 	}
 }
 
-function loginSuccessful(json) {
+function loginSuccessful(url) {
+	// Where does this belong?
+	location.replace(url.url)
 	return {
 		type: AppConstants.LOGIN_SUCCESS,
-		json: json
+		url: url
 	}
 }
 
