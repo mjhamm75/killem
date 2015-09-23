@@ -33,7 +33,9 @@ app.get('/login', function(req, res) {
             redirect_uri: redirect_uri,
             state: state
         });
-    res.send(result);
+    res.json({
+        url: result
+    });
 });
 
 app.get('/callback', function(req, res) {

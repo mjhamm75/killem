@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 var Login = React.createClass({
 	login: function() {
-		this.props.dispatch(Actions.login);
+		this.props.dispatch(Actions.login());
 	},
 
 	render: function() {

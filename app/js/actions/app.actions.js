@@ -51,22 +51,19 @@ export function login() {
 	return dispatch => {
 		dispatch(loginRequest());
 		return isoFetch('/login')
-			.then(response => reponse.json())
 			.then(json => dispatch(loginSuccessful(json)))
 	}
 }
 
 function loginRequest() {
-	console.log('login request')
 	return {
 		type: AppConstants.LOGIN_REQUEST
 	}
 }
 
 function loginSuccessful(json) {
-	console.log('login successful');
 	return {
-		type: AppConstants.LOGIN_SUCCESSFUL,
+		type: AppConstants.LOGIN_SUCCESS,
 		json: json
 	}
 }
