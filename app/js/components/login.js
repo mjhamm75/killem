@@ -26,4 +26,4 @@ function mapStateToProps() {
 	}
 }
 
-module.exports = connect(mapStateToProps)(Login);	
+module.exports = connect(mapStateToProps)(Login);

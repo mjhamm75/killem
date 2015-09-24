@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import configureStore from './stores/redux.store.js';
 
-var App = require('./components/login.js');
+var Login = require('./components/login.js');
 var CreatePlaylist = require('./components/create.js');
 var Juking = require('./components/juking.js');
 var About = require('./components/about.js');
@@ -17,7 +17,7 @@ React.render(
 	<Provider store={store}>
 		{() =>
 			<Router>
-				<Route path="/" component={App} />
+				<Route path="/" component={Login} />
 				<Route path="/create" component={CreatePlaylist} />
 				<Route path="/juking" component={Juking} />
 				<Route path="/about" component={About} />

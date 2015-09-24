@@ -37,7 +37,7 @@ export function getPlaylists() {
 
 export function createPlaylist() {
 	return {
-		actionType: AppConstants.CREATE_PLAYLIST
+		type: AppConstants.CREATE_PLAYLIST
 	}
 }
 

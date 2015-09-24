@@ -4,6 +4,7 @@ import * as AppConstants from './../actions/app.actions.js';
 function playlist(state = [], action) {
   switch (action.type) {
   case AppConstants.GET_TRACKS:
+  case AppConstants.CREATE_PLAYLIST:
     return action.playlist;
   default:
     return state;

@@ -22,4 +22,10 @@ var Juking = React.createClass({
 	}
 });
 
-module.exports = Juking;
+function mapStateToProps() {
+	return {
+		user: []
+	}
+}
+
+module.exports = connect(mapStateToProps)(Juking);

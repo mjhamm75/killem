@@ -1,7 +1,6 @@
 var React = require('react');
+import { connect } from 'react-redux';
 var AppActions = require('./../actions/app.actions.js');
-var SearchMusic = require('./search.music.js');
-var SearchResults = require('./search.results.js');
 
 var CreatePlaylist = React.createClass({
 	getInitialState: function() {
@@ -9,11 +8,11 @@ var CreatePlaylist = React.createClass({
 		return null;
 	},
 	_createPlaylist: function() {
-		AppActions.createPlaylist();
+		this.props.dispatch(AppActions.createPlaylist());
 	},
 	render: function() {
 		return (
-			<div className="col-md-2 col-md-offset-5 col-sm-2 col-sm-offset-5 col-xs-2 col-xs-offset-5 vertical-center">
+			<div className="flex-container-center">
 				<button onClick={this._createPlaylist} type="button" className="btn btn-info">Create Party Playlists</button>
 			</div>
 
@@ -21,4 +20,10 @@ var CreatePlaylist = React.createClass({
 	}
 });
 
-module.exports = CreatePlaylist;
+function mapStateToProps() {
+	return {
+		user: []
+	}
+}
+
+module.exports = connect(mapStateToProps)(CreatePlaylist);
