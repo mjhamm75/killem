@@ -20,7 +20,7 @@ var app = express();
 app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
 
-app.get('/test', function(req, res) {
+app.get('/routes', function(req, res) {
     res.json({
         heartbeat: 'live'
     })
