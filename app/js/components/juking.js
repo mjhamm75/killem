@@ -3,6 +3,7 @@ var AppActions = require('./../actions/app.actions.js');
 var Playlist = require('./playlist.js');
 var SearchMusic = require('./search.music.js');
 var SearchResult = require('./search.results.js');
+import { connect } from 'react-redux';
 
 var Juking = React.createClass({
 	_addTrack: function() {

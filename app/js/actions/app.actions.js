@@ -36,8 +36,23 @@ export function getPlaylists() {
 }
 
 export function createPlaylist() {
+	return dispatch => {
+		dispatch(createPlaylistRequest());
+		return isoFetch('/test')
+			.then(playlist => dispatch(createPlaylistSuccessful(playlist)));
+	}
+}
+
+function createPlaylistRequest() {
 	return {
-		type: AppConstants.CREATE_PLAYLIST
+		type: AppConstants.CREATE_PLAYLIST_REQUEST
+	}
+}
+
+function createPlaylistSuccessful(playlist) {
+	return {
+		type: AppConstants.CREATE_PLAYLIST_SUCCESSFUL,
+		playlist
 	}
 }
 

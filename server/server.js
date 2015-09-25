@@ -20,6 +20,12 @@ var app = express();
 app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
 
+app.get('/test', (req, res) => {
+    res.json({
+        created: true
+    })
+})
+
 app.get('/login', (req, res) => {
     var state = utils.generateRandomString(16);
     res.cookie(stateKey, state);
