@@ -46,8 +46,8 @@ export function createPlaylist() {
 		return isoFetch('https://api.spotify.com/v1/users/' + me.id + '/playlists', {
 			method: 'post',
 			headers: {
-				'Authorization', 'Bearer ' + tokens.access_token,
-				'Content-Type', 'application/json'	
+				'Authorization': 'Bearer ' + tokens.access_token,
+				'Content-Type': 'application/json'	
 			},
 			body: JSON.stringify(playlist)
 		})
