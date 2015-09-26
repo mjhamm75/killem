@@ -3,10 +3,6 @@ import * as Actions from './../actions/app.actions.js';
 import { connect } from 'react-redux';
 
 var Login = React.createClass({
-	login: function() {
-		this.props.dispatch(Actions.login());
-	},
-
 	render: function() {
 		return (	
 			<div className="flex-container-center">
@@ -20,10 +16,4 @@ var Login = React.createClass({
 	}
 });
 
-function mapStateToProps() {
-	return {
-		user: []
-	}
-}
-
-module.exports = connect(mapStateToProps)(Login);
+module.exports = Login;
