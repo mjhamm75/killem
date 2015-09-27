@@ -2,13 +2,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Login from './../components/login.js';
 
-export default class LoginContainer extends React.Component {
+class LoginContainer extends React.Component {
   constructor() {
     super();
-  }
-
-  static propTypes = {
-
   }
 
   static contextTypes = {
@@ -16,7 +12,6 @@ export default class LoginContainer extends React.Component {
   }
 
   handleLogin() {
-    const router = this.context.router;
     this.props.dispatch(Actions.login(null, null, this.context.router));
   }
 
@@ -29,3 +24,12 @@ export default class LoginContainer extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    stuff: []
+  }
+}
+
+
+export default connect(mapStateToProps)(LoginContainer);

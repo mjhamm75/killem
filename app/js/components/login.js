@@ -1,19 +1,23 @@
-var React = require('react');
-import * as Actions from './../actions/app.actions.js';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 
-var Login = React.createClass({
-	render: function() {
+class Login extends React.Component {
+	static propType = {
+		handleLogin: PropTypes.func.isRequired
+	}
+	static contextTypes = {
+    	router: React.PropTypes.object
+	}
+	render() {
 		return (	
 			<div className="flex-container-center">
 				<form>
 					<div className="form-group">
-						<button type="button" className="btn btn-success" onClick={this.login}>Log in to Spotify</button>
+						<button type="button" className="btn btn-success" onClick={this.props.handleLogin}>Log in to Spotify</button>
 					</div>
 				</form>
 			</div>
 		);
 	}
-});
+}
 
 module.exports = Login;
