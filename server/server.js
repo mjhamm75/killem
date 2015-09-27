@@ -20,13 +20,13 @@ var app = express();
 app.use(express.static(__dirname + '/public'))
     .use(cookieParser());
 
-app.get('/routes', function(req, res) {
+app.get('/test', (req, res) => {
     res.json({
-        heartbeat: 'live'
+        created: true
     })
 })
 
-app.get('/login', function(req, res) {
+app.get('/login', (req, res) => {
     var state = utils.generateRandomString(16);
     res.cookie(stateKey, state);
 
@@ -39,10 +39,12 @@ app.get('/login', function(req, res) {
             redirect_uri: redirect_uri,
             state: state
         });
-    res.send(result);
+    res.json({
+        url: result
+    });
 });
 
-app.get('/callback', function(req, res) {
+app.get('/callback', (req, res) => {
     var code = req.query.code || null;
     var state = req.query.state || null;
     var storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -61,7 +63,7 @@ app.get('/callback', function(req, res) {
         json: true
     };
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, (error, response, body) => {
         tokens.access_token = body.access_token;
         tokens.refresh_token = body.refresh_token;
     });
@@ -69,11 +71,11 @@ app.get('/callback', function(req, res) {
     res.redirect('/#/create');
 });
 
-app.get('/tokens', function(req, res) {
+app.get('/tokens', (req, res) => {
   res.json(tokens);
 });
 
-app.get('/refresh_token', function(req, res) {
+app.get('/refresh_token', (req, res) => {
 
     // requesting access token from refresh token
     var refresh_token = req.query.refresh_token;
@@ -89,7 +91,7 @@ app.get('/refresh_token', function(req, res) {
         json: true
     };
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, (error, response, body) => {
         if (!error && response.statusCode === 200) {
             var access_token = body.access_token;
             res.send({
