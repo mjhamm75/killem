@@ -34,6 +34,7 @@
     "react-redux": "^2.1.2",
     "react-router": "^1.0.0-rc1",
     "redux": "^3.0.0",
+    "redux-router": "^1.0.0-beta3",
     "request": "^2.51.0",
     "superagent": "^0.21.0",
     "webpack": "^1.12.1",
