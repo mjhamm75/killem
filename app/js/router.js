@@ -1,6 +1,7 @@
 // require('./../sass/app.scss');
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
@@ -13,16 +14,14 @@ var About = require('./components/about.js');
 
 const store = configureStore();
 
-React.render(
+ReactDOM.render(
 	<Provider store={store}>
-		{() =>
-			<Router>
-				<Route path="/" component={LoginContainer} />
-				<Route path="/create" component={CreatePlaylist} />
-				<Route path="/juking" component={Juking} />
-				<Route path="/about" component={About} />
-			</Router>
-		}
+		<Router>
+			<Route path="/" component={LoginContainer} />
+			<Route path="/create" component={CreatePlaylist} />
+			<Route path="/juking" component={Juking} />
+			<Route path="/about" component={About} />
+		</Router>
 	</Provider>,
 	document.getElementById('example')
 );
