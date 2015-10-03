@@ -1,27 +1,39 @@
-// require('./../sass/app.scss');
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router, Route } from 'react-router';
-import { Provider } from 'react-redux';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-import configureStore from './stores/redux.store.js';
-
+import {
+  ReduxRouter,
+  reduxReactRouter,
+  routerStateReducer
+} from 'redux-router';
+import React, { Component, PropTypes } from 'react';
+import { Provider, connect } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import createHistory from 'history/lib/createMemoryHistory';
+import { Link, Route } from 'react-router';
 var LoginContainer = require('./containers/LoginContainer.js');
-var CreatePlaylist = require('./components/create.js');
-var Juking = require('./components/juking.js');
-var About = require('./components/about.js');
 
-const store = configureStore();
+function redirectOnEnter(pathname) {
+  return (routerState, replaceState) => replaceState(null, pathname);
+}
 
-ReactDOM.render(
+const routes = (
+  <Route path="/" component={LoginContainer} >
+  </Route>
+);
+
+const reducer = combineReducers({
+  router: routerStateReducer
+});
+
+const history = createHistory();
+const store = reduxReactRouter({
+  history
+})(createStore)(reducer);
+
+React.render(
 	<Provider store={store}>
-		<Router>
-			<Route path="/" component={LoginContainer} />
-			<Route path="/create" component={CreatePlaylist} />
-			<Route path="/juking" component={Juking} />
-			<Route path="/about" component={About} />
-		</Router>
+		<ReduxRouter>
+			{routes}
+		</ReduxRouter>
 	</Provider>,
 	document.getElementById('example')
 );
+
