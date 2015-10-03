@@ -36,4 +36,3 @@ React.render(
 	</Provider>,
 	document.getElementById('example')
 );
-
