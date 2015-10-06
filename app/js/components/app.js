@@ -7,9 +7,7 @@ var App = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<h1>Search Music</h1>
-				<SearchMusic />
-				<SearchResults />
+				{this.props.children}
 			</div>
 		);
 	}
