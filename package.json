@@ -1,44 +1,44 @@
 {
-  "name": "budget",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "redux-real-world-example",
+  "version": "0.0.0",
+  "description": "Killem",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mjhamm75/react-webpack.git"
+    "url": "https://github.com/rackt/redux.git"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mjhamm75/react-webpack/issues"
+    "url": "https://github.com/rackt/redux/issues"
   },
-  "homepage": "https://github.com/mjhamm75/react-webpack",
-  "devDependencies": {
-    "jsx-loader": "^0.12.1"
-  },
+  "homepage": "http://rackt.github.io/redux",
   "dependencies": {
-    "babel-core": "^5.8.24",
-    "babel-loader": "^5.3.2",
-    "bootstrap": "^3.3.1",
-    "cookie-parser": "^1.3.3",
-    "express": "^4.10.6",
-    "immutable": "^3.7.5",
-    "jquery": "^2.1.2",
-    "lodash": "^2.4.1",
-    "morgan": "^1.5.0",
-    "querystring": "^0.2.0",
+    "history": "^1.9.0",
+    "humps": "^0.6.0",
+    "isomorphic-fetch": "^2.1.1",
+    "lodash": "^3.10.1",
+    "normalizr": "^1.0.0",
     "react": "^0.14.0-rc1",
     "react-dom": "^0.14.0-rc1",
     "react-redux": "^2.1.2",
     "react-router": "^1.0.0-rc1",
     "redux": "^3.0.0",
+    "redux-logger": "0.0.1",
     "redux-router": "^1.0.0-beta3",
-    "request": "^2.51.0",
-    "superagent": "^0.21.0",
-    "webpack": "^1.12.1",
-    "webpack-dev-server": "^1.6.6"
+    "redux-thunk": "^0.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^5.6.18",
+    "babel-loader": "^5.1.4",
+    "redux-devtools": "^2.1.5",
+    "babel-plugin-react-transform": "^1.1.0",
+    "concurrently": "^0.1.1",
+    "express": "^4.13.3",
+    "react-transform-hmr": "^1.0.0",
+    "webpack": "^1.9.11",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.2.0"
   }
 }
