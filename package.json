@@ -1,5 +1,5 @@
 {
-  "name": "redux-real-world-example",
+  "name": "killem",
   "version": "0.0.0",
   "description": "Killem",
   "scripts": {
@@ -7,21 +7,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rackt/redux.git"
+    "url": "https://github.com/mjhamm75/killem.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rackt/redux/issues"
+    "url": "https://github.com/mjhamm75/killem/issues"
   },
-  "homepage": "http://rackt.github.io/redux",
+  "homepage": "http://www.doesntexist.com",
   "dependencies": {
     "history": "^1.9.0",
     "humps": "^0.6.0",
     "isomorphic-fetch": "^2.1.1",
     "lodash": "^3.10.1",
     "normalizr": "^1.0.0",
-    "react": "^0.14.0-rc1",
-    "react-dom": "^0.14.0-rc1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "react-redux": "^2.1.2",
     "react-router": "^1.0.0-rc1",
     "redux": "^3.0.0",
