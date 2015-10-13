@@ -14,6 +14,11 @@ var redirect_uri = 'http://localhost:8888/callback';
 
 import request from 'request';
 
+var tokens = {
+    access_token: {},
+    refresh_token: {}
+};
+
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
 app.use(webpackHotMiddleware(compiler));
@@ -65,6 +70,36 @@ app.get('/callback', (req, res) => {
     });
 
     res.redirect('/about');
+});
+
+app.get('/tokens', (req, res) => {
+  res.json(tokens);
+});
+
+app.get('/refresh_token', (req, res) => {
+
+    // requesting access token from refresh token
+    var refresh_token = req.query.refresh_token;
+    var authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+            'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        },
+        form: {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+        },
+        json: true
+    };
+
+    request.post(authOptions, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+            var access_token = body.access_token;
+            res.send({
+                'access_token': access_token
+            });
+        }
+    });
 });
 
 app.get('*', function(req, res) {
