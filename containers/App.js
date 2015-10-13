@@ -20,7 +20,6 @@ class App extends Component {
 App.propTypes = {
   // Injected by React Redux
   errorMessage: PropTypes.string,
-  resetErrorMessage: PropTypes.func.isRequired,
   pushState: PropTypes.func.isRequired,
   // Injected by React Router
   children: PropTypes.node
