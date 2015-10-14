@@ -10,8 +10,7 @@ class LoginPage extends Component {
 	}
 
 	login() {
-		debugger;
-		this.props.login();
+		this.props.login(this.props.history);
 	}
 
 	render() {
@@ -24,8 +23,9 @@ class LoginPage extends Component {
 	}
 }
 
-function mapStateToProps() {
+function mapStateToProps(state) {
 	return {
+		router: state.router
 	}
 }
 

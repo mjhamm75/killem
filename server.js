@@ -45,6 +45,19 @@ app.get('/log-in', function(req, res) {
     });
 })
 
+app.get('/me', (req, res) => {
+    var options = {
+        url: 'https://api.spotify.com/v1/me',
+        headers: { 'Authorization': 'Bearer ' + tokens.access_token },
+        json: true
+    };
+
+    // use the access token to access the Spotify Web API
+    request.get(options, function(error, response, body) {
+        res.json(response);
+    });
+})
+
 app.get('/callback', (req, res) => {
     var code = req.query.code || null;
     var state = req.query.state || null;

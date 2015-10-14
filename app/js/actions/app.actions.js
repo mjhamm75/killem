@@ -75,11 +75,11 @@ export function getTracks() {
 	}
 }
 
-export function login() {
+export function login(history) {	
 	return dispatch => {
 		dispatch(loginRequest());
-		return isoFetch('/login')
-			.then(url => dispatch(loginSuccessful(url)))
+		return isoFetch('/log-in')
+			.then(response => dispatch(loginSuccessful(history, response.url)))
 	}
 }
 
@@ -89,9 +89,8 @@ function loginRequest() {
 	}
 }
 
-function loginSuccessful(url) {
-	// Where does this belong?
-	location.replace(url.url)
+function loginSuccessful(history, url) {
+	location.replace(url);
 	return {
 		type: AppConstants.LOGIN_SUCCESS,
 		url: url
