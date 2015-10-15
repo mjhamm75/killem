@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { getMe } from './../app/js/actions/app.actions.js';
 
 class About extends Component {
@@ -8,7 +9,7 @@ class About extends Component {
 	}
 
 	getMe() {
-
+		this.props.getMe();
 	}
 
 	render() {
@@ -21,5 +22,12 @@ class About extends Component {
 	}
 }
 
+function mapStateToProps(state) {
+  return {
+  	
+  };
+}
 
-export default About;
+export default connect(mapStateToProps, {
+  getMe
+})(About);

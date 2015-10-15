@@ -1,6 +1,5 @@
 import * as AppConstants from '../constants/app.constants.js';	
 import { isoFetch } from './../utils/fetch.utils.js';
-var AppDispatcher = require('../dispatcher/app.dispatcher.js');
 
 export function addToPlaylist(track) {
 	return {
@@ -23,9 +22,25 @@ export function getDetails(url) {
 	}
 }
 
-export function getMe() {
+function getMeRequest() {
 	return {
-		actionType: AppConstants.GET_ME
+		actionType: AppConstants.GET_ME_REQUEST
+	}
+}
+
+function getMeSuccess(me) {
+	return {
+		actionType: AppConstants.GET_ME_SUCCESS,
+		me
+	}
+}
+
+export function getMe() {
+	return dispatch => {
+		dispatch(getMeRequest());
+		return isoFetch('/me').then(me => {
+			dispatch(getMeSuccess(me))
+		})		
 	}
 }
 
