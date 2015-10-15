@@ -24,13 +24,13 @@ export function getDetails(url) {
 
 function getMeRequest() {
 	return {
-		actionType: AppConstants.GET_ME_REQUEST
+		type: AppConstants.GET_ME_REQUEST
 	}
 }
 
 function getMeSuccess(me) {
 	return {
-		actionType: AppConstants.GET_ME_SUCCESS,
+		type: AppConstants.GET_ME_SUCCESS,
 		me
 	}
 }
