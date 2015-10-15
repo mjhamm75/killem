@@ -24,7 +24,7 @@ class About extends Component {
 
 function mapStateToProps(state) {
   return {
-  	
+  	me: state.me
   };
 }
 

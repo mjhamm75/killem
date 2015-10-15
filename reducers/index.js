@@ -3,6 +3,7 @@ import merge from 'lodash/object/merge';
 import paginate from './paginate';
 import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
+import { GET_ME_SUCCESS } from './../app/js/constants/app.constants.js';
 
 // Updates an entity cache in response to any action with response.entities.
 function entities(state = { users: {}, repos: {} }, action) {
@@ -24,6 +25,15 @@ function errorMessage(state = null, action) {
   }
 
   return state;
+}
+
+function me(state = {}, action) {
+  switch(action.type) {
+    case GET_ME_SUCCESS:
+     return action.me;
+    default:
+      return state;
+  }
 }
 
 // Updates the pagination data for different actions.
@@ -50,6 +60,7 @@ const rootReducer = combineReducers({
   entities,
   pagination,
   errorMessage,
+  me,
   router
 });
 
