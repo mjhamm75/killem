@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { getMe } from './app/js/actions/app.actions.js';
+import { getMe } from './../app/js/actions/app.actions.js';
 
 class About extends Component {
 	constructor(props) {
