@@ -17,6 +17,7 @@ class About extends Component {
 			<div>
 				<h1>About</h1>
 				<button onClick={this.getMe}>Get Me</button>
+				{JSON.stringify(this.props.me)}
 			</div>
 		)
 	}
