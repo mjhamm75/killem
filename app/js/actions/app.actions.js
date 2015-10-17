@@ -22,28 +22,6 @@ export function getDetails(url) {
 	}
 }
 
-function getMeRequest() {
-	return {
-		type: AppConstants.GET_ME_REQUEST
-	}
-}
-
-function getMeSuccess(me) {
-	return {
-		type: AppConstants.GET_ME_SUCCESS,
-		me
-	}
-}
-
-export function getMe() {
-	return dispatch => {
-		dispatch(getMeRequest());
-		return isoFetch('/me').then(me => {
-			dispatch(getMeSuccess(me))
-		})		
-	}
-}
-
 export function getPlaylists() {
 	return {
 		actionType: AppConstants.GET_PLAYLISTS
@@ -87,28 +65,6 @@ function createPlaylistSuccessful(playlist) {
 export function getTracks() {
 	return {
 		actionType: AppConstants.GET_TRACKS
-	}
-}
-
-export function login(history) {	
-	return dispatch => {
-		dispatch(loginRequest());
-		return isoFetch('/log-in')
-			.then(response => dispatch(loginSuccessful(history, response.url)))
-	}
-}
-
-function loginRequest() {
-	return {
-		type: AppConstants.LOGIN_REQUEST
-	}
-}
-
-function loginSuccessful(history, url) {
-	location.replace(url);
-	return {
-		type: AppConstants.LOGIN_SUCCESS,
-		url: url
 	}
 }
 

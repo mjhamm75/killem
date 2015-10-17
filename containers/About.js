@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { getMe } from './../app/js/actions/app.actions.js';
+import { getMe } from './../actions/killem.actions.js';
 
 class About extends Component {
 	constructor(props) {
