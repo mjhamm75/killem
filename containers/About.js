@@ -12,12 +12,28 @@ class About extends Component {
 		this.props.getMe();
 	}
 
+	renderMe() {
+		let { me } = this.props;
+		if(me.body) {
+			return (
+				<div>
+					<h1>{me.body.id}</h1>
+					<h2>{me.body.url}</h2>
+					<h3>{me.body.email}</h3>
+				</div>
+			)			
+		} else {
+			return null;
+		}
+	}
+
 	render() {
+		let { me } = this.props;
 		return (
 			<div>
 				<h1>About</h1>
 				<button onClick={this.getMe}>Get Me</button>
-				{JSON.stringify(this.props.me)}
+				{this.renderMe()}
 			</div>
 		)
 	}
