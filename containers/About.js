@@ -28,7 +28,6 @@ class About extends Component {
 	}
 
 	render() {
-		let { me } = this.props;
 		return (
 			<div>
 				<h1>About</h1>
