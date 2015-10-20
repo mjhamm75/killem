@@ -86,7 +86,7 @@ app.get('/callback', (req, res) => {
         tokens.refresh_token = body.refresh_token;
     });
 
-    res.redirect('/about');
+    res.redirect('/create');
 });
 
 app.get('/tokens', (req, res) => {
