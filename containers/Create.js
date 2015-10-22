@@ -1,13 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import Login from './../components/Login';
-import { login } from './../actions/killem.actions.js';
+import { createPlaylist, getMe, getTokens } from './../actions/killem.actions.js';
 import { connect } from 'react-redux';
 
 class Create extends Component {
-  createPlaylist() {
-
+  constructor(props) {
+    super(props);
+    this.createPlaylist = this.createPlaylist.bind(this);
+    this.props.dispatch(getMe());
+    this.props.dispatch(getTokens());
   }
 
+  createPlaylist() {
+    this.props.dispatch(this.props.createPlaylist());
+  }
   render() {
     return (
       <div>
@@ -20,10 +25,9 @@ class Create extends Component {
 
 function mapStateToProps(state) {
   return {
+    createPlaylist,
     router: state.router
   }
 }
 
-export default connect(mapStateToProps, {
-  login
-})(Create);
+export default connect(mapStateToProps)(Create);
