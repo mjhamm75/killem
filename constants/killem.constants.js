@@ -9,3 +9,5 @@ export const CREATE_PLAYLIST = 'CREATE_PLAYLIST';
 export const GET_TRACKS = 'GET_TRACKS';
 export const ADD_TRACK = 'ADD_TRACK';
 export const REMOVE_TRACK = 'REMOVE_TRACK';
+export const GET_TOKENS_REQUEST = 'GET_TOKENS_REQUEST';
+export const GET_TOKENS_SUCCESS = 'GET_TOKENS_SUCCESS';
