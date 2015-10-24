@@ -1,5 +1,6 @@
 import * as AppConstants from './../constants/killem.constants.js';
 import { isoFetch } from './../utils/fetch.utils.js';
+import axios from 'axios';
 
 export function login(history) {	
 	return dispatch => {
@@ -77,8 +78,9 @@ export function createPlaylist() {
 			public: true
 		};
 		dispatch(createPlaylistRequest());
-		return isoFetch('https://api.spotify.com/v1/users/' + getState().me.id + '/playlists', {
-			method: 'post',
+		return axios('/createPlaylist/Cracklist')
+		return axios('https://api.spotify.com/v1/users/' + getState().me.id + '/playlists', {
+			method: 'POST',
 			headers: {
 				'Authorization': 'Bearer ' + getState().tokens.access_token,
 				'Content-Type': 'application/json'	
