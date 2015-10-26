@@ -13,6 +13,7 @@ var client_secret = 'ad92eee0fb2743ea8b5974ae2ab93db1';
 var redirect_uri = 'http://localhost:8888/callback';
 
 import request from 'request';
+import axios from 'axios';
 
 var tokens = {
     access_token: {},
@@ -118,6 +119,18 @@ app.get('/refresh_token', (req, res) => {
         }
     });
 });
+
+app.post('/createPlaylist/:name', (req, res) => {
+    axios('https://api.spotify.com/v1/users/' + getState().me.id + '/playlists', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getState().tokens.access_token,
+                'Content-Type': 'application/json'  
+            },
+            body: JSON.stringify(playlist)
+        })
+        .then(playlist => dispatch(createPlaylistSuccessful(playlist)));
+})
 
 app.get('*', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
