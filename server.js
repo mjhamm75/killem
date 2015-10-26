@@ -15,10 +15,12 @@ var redirect_uri = 'http://localhost:8888/callback';
 import request from 'request';
 import axios from 'axios';
 
-var tokens = {
+let tokens = {
     access_token: {},
     refresh_token: {}
 };
+
+let me = []; 
 
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
@@ -58,6 +60,7 @@ app.get('/me', (req, res) => {
         if(error) {
             console.log(error);
         } else {
+            me = response.body;
             res.json(response);            
         }
     });
@@ -121,15 +124,30 @@ app.get('/refresh_token', (req, res) => {
 });
 
 app.post('/createPlaylist/:name', (req, res) => {
-    axios('https://api.spotify.com/v1/users/' + getState().me.id + '/playlists', {
+    console.log('creating playlist');
+    
+    var playlist = {
+        name: 'TestList',
+        public: true
+    };
+    
+    console.log(me.id)
+    console.log(tokens)
+    console.log(JSON.stringify(playlist));
+
+    axios({
+            url: 'https://api.spotify.com/v1/users/' + me.id + '/playlists',
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + getState().tokens.access_token,
+                'Authorization': 'Bearer ' + tokens.access_token,
                 'Content-Type': 'application/json'  
             },
-            body: JSON.stringify(playlist)
+            data: JSON.stringify(playlist)
         })
-        .then(playlist => dispatch(createPlaylistSuccessful(playlist)));
+        .then(playlist => {
+            console.log(playlist)
+            res.json(playlist);
+        });
 })
 
 app.get('*', function(req, res) {

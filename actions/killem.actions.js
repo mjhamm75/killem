@@ -73,21 +73,9 @@ function getTokensSuccess(tokens) {
 
 export function createPlaylist() {
 	return (dispatch, getState) => {
-		var playlist = {
-			name: 'CrackList',
-			public: true
-		};
 		dispatch(createPlaylistRequest());
-		return axios('/createPlaylist/Cracklist')
-		return axios('https://api.spotify.com/v1/users/' + getState().me.id + '/playlists', {
-			method: 'POST',
-			headers: {
-				'Authorization': 'Bearer ' + getState().tokens.access_token,
-				'Content-Type': 'application/json'	
-			},
-			body: JSON.stringify(playlist)
-		})
-		.then(playlist => dispatch(createPlaylistSuccessful(playlist)));
+		return axios.post('/createPlaylist/Cracklist')
+			.then(playlist => dispatch(createPlaylistSuccessful(playlist)));
 	}
 }
 
