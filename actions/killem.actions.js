@@ -94,9 +94,12 @@ function createPlaylistSuccessful(playlist) {
 
 export function searchTracks(term) {
 	return (dispatch) => {
-		dispatch(beginSearch());
-		return axios.post('/search')
-			.then(tracks => dispatch(searchTracksSuccess(tracks)));
+		dispatch(searchTracksRequest());
+		return axios.post('/search-tracks', {
+			term
+		})
+		.then(tracks => dispatch(searchTracksSuccess(tracks)))
+		.catch(err => dispatch(searchTracksFail()));
 	}
 }
 
@@ -110,5 +113,11 @@ function searchTrackSuccess(tracks) {
 	return {
 		type: AppConstants.SEARCH_TRACKS_SUCCESS,
 		tracks
+	}
+}
+
+function searchTracksFail() {
+	return {
+		type: AppConstants.SEARCH_TRACKS_FAIL
 	}
 }

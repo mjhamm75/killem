@@ -5,6 +5,7 @@ var config = require('./webpack.config');
 var querystring = require('querystring');
 import { generateRandomString } from './utils/random.utils.js';
 var stateKey = 'spotify_auth_state';
+import bodyParser from 'body-parser';
 
 var app = new require('express')();
 var port = 8888;
@@ -25,6 +26,7 @@ let me = [];
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
 app.use(webpackHotMiddleware(compiler));
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
@@ -148,11 +150,17 @@ app.post('/createPlaylist/:name', (req, res) => {
             console.log(playlist)
             res.json(playlist);
         });
-})
+});
+
+app.post('/search-tracks', (req, res) => {
+    var term = req.body.term;
+    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`)
+        .then(response => res.json(response));
+});
 
 app.get('*', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
-})
+});
 
 app.listen(port, function(error) {
   if (error) {
