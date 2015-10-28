@@ -91,3 +91,24 @@ function createPlaylistSuccessful(playlist) {
 		playlist
 	}
 }
+
+export function searchTracks(term) {
+	return (dispatch) => {
+		dispatch(beginSearch());
+		return axios.post('/search')
+			.then(tracks => dispatch(searchTracksSuccess(tracks)));
+	}
+}
+
+function searchTracksRequest() {
+	return {
+		type: AppConstants.SEARCH_TRACKS_REQUEST
+	}
+}
+
+function searchTrackSuccess(tracks) {
+	return {
+		type: AppConstants.SEARCH_TRACKS_SUCCESS,
+		tracks
+	}
+}
