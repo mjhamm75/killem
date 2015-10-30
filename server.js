@@ -132,10 +132,6 @@ app.post('/createPlaylist/:name', (req, res) => {
         name: 'TestList',
         public: true
     };
-    
-    console.log(me.id)
-    console.log(tokens)
-    console.log(JSON.stringify(playlist));
 
     axios({
             url: 'https://api.spotify.com/v1/users/' + me.id + '/playlists',
