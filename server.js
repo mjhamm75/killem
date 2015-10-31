@@ -60,7 +60,7 @@ app.get('/me', (req, res) => {
     // use the access token to access the Spotify Web API
     request.get(options, function(error, response, body) {
         if(error) {
-            console.log(error);
+            console.error(error);
         } else {
             me = response.body;
             res.json(response);            
