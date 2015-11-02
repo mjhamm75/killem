@@ -126,8 +126,6 @@ app.get('/refresh_token', (req, res) => {
 });
 
 app.post('/createPlaylist/:name', (req, res) => {
-    console.log('creating playlist');
-    
     var playlist = {
         name: 'TestList',
         public: true
