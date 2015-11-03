@@ -1,7 +1,7 @@
 import * as ActionTypes from '../actions';
 import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
-import { GET_ME_SUCCESS, GET_TOKENS_SUCCESS } from './../constants/killem.constants.js';
+import { GET_ME_SUCCESS, GET_TOKENS_SUCCESS, SEARCH_TRACKS_SUCCESS } from './../constants/killem.constants.js';
 
 // Updates error message to notify about the failed fetches.
 function errorMessage(state = null, action) {
@@ -34,10 +34,20 @@ function tokens(state = {}, action) {
   }
 }
 
+function searchResults(state = {}, action) {
+  switch(action.type) {
+    case SEARCH_TRACKS_SUCCESS:
+      return action.tracks;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   errorMessage,
   me,
   router,
+  searchResults,
   tokens
 });
 

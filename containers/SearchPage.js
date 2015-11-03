@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { searchTracks } from './../actions/killem.actions.js';
+import SearchResults from './../components/SearchResults';
 
 class SearchPage extends Component {
 	constructor(props) {
@@ -14,6 +15,7 @@ class SearchPage extends Component {
 				<h1>Search</h1>
 				<input ref="searchTerm"/>
 				<button onClick={this.searchTracks}>Search</button>
+				<SearchResults searchResults={this.props.searchResults}/>
 			</div>
 		)
 	}
@@ -25,7 +27,8 @@ class SearchPage extends Component {
 
 function mapStateToProps(state) {
 	return {
-		router: state.router
+		router: state.router,
+		searchResults: state.searchResults
 	}
 }
 

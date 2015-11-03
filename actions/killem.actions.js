@@ -99,7 +99,7 @@ export function searchTracks(term) {
 			term
 		})
 		.then(tracks => dispatch(searchTracksSuccess(tracks)))
-		.catch(err => dispatch(searchTracksFail()));
+		.catch(err => dispatch(searchTracksFail(err)));
 	}
 }
 
@@ -116,7 +116,8 @@ function searchTrackSuccess(tracks) {
 	}
 }
 
-function searchTracksFail() {
+function searchTracksFail(err) {
+	debugger;
 	return {
 		type: AppConstants.SEARCH_TRACKS_FAIL
 	}
