@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 class Tracks extends Component {
 	render() {
-		var artists = null;
-		var tracks = null;
+		var artists = <div>No Artists Found</div>;
+		var tracks = <div>No Tracks Found</div>;
 		var data = this.props.searchResults.data;
 		if(data) {
 			var artists = this.renderArtists(data.data.artists.items);
@@ -20,15 +20,23 @@ class Tracks extends Component {
 	}
 
 	renderArtists(artists) {
-		return artists.map(artist => {
-			return <div>{artist.name}</div>
-		});
+		if(artists.length > 0) {
+			return artists.map(artist => {
+				return <div>{artist.name}</div>
+			});			
+		} else {
+			return <div>No Artists Found</div>;
+		}
 	}
 
 	renderTracks(tracks) {
-		return tracks.map(track => {
-			return <div>{track.name}</div>
-		});
+		if(tracks.length > 0) {
+			return tracks.map(track => {
+				return <div>{track.name}</div>
+			});			
+		} else {
+			return <div>No Tracks Found</div>;
+		}
 	}
 }
 
