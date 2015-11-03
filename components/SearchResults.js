@@ -5,6 +5,7 @@ class SearchResults extends Component {
 	render() {
 		var artists = <div>No Artists Found</div>;
 		var tracks = <div>No Tracks Found</div>;
+		var playlist = <div>Playlist is empty</div>;
 		var data = this.props.searchResults.data;
 		if(data) {
 			var artists = this.renderArtists(data.data.artists.items);
@@ -12,6 +13,8 @@ class SearchResults extends Component {
 		}
 		return (
 			<div>
+				<h2>Playlist</h2>
+					{playlist}
 				<h2>Artists</h2>
 					{artists}
 				<h2>Tracks</h2>
