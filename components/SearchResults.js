@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import Track from './Track';
 
-class Tracks extends Component {
+class SearchResults extends Component {
 	render() {
 		var artists = <div>No Artists Found</div>;
 		var tracks = <div>No Tracks Found</div>;
@@ -40,4 +41,4 @@ class Tracks extends Component {
 	}
 }
 
-export default Tracks;
+export default SearchResults;
