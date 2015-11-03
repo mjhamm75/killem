@@ -33,7 +33,7 @@ class SearchResults extends Component {
 	renderTracks(tracks) {
 		if(tracks.length > 0) {
 			return tracks.map(track => {
-				return <div>{track.name}</div>
+				return <Track track={track} />
 			});			
 		} else {
 			return <div>No Tracks Found</div>;
