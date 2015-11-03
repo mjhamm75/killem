@@ -97,9 +97,12 @@ export function searchTracks(term) {
 		dispatch(searchTracksRequest());
 		return axios.post('/search-tracks', {
 			term
+		}).then(function(tracks){
+			dispatch(searchTrackSuccess(tracks));
 		})
-		.then(tracks => dispatch(searchTracksSuccess(tracks)))
-		.catch(err => dispatch(searchTracksFail(err)));
+		// .catch(function(err) {
+		// 	dispatch(searchTracksFail());
+		// });
 	}
 }
 
@@ -116,8 +119,7 @@ function searchTrackSuccess(tracks) {
 	}
 }
 
-function searchTracksFail(err) {
-	debugger;
+function searchTracksFail() {
 	return {
 		type: AppConstants.SEARCH_TRACKS_FAIL
 	}

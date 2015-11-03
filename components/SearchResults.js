@@ -6,8 +6,8 @@ class Tracks extends Component {
 		var tracks = null;
 		var data = this.props.searchResults.data;
 		if(data) {
-			var artists = this.renderArtists(data.artists);
-			var tracks = this.renderTracks(data.tracks);
+			var artists = this.renderArtists(data.data.artists.items);
+			var tracks = this.renderTracks(data.data.tracks.items);
 		}
 		return (
 			<div>
