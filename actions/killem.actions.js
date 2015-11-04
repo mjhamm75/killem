@@ -125,7 +125,7 @@ function searchTracksFail() {
 	}
 }
 
-function addTrack(trackId) {
+export function addTrack(trackId) {
 	return dispatch => {
 		dispatch(addTrackRequest());
 		axios.post('/add-track', {

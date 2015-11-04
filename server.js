@@ -21,7 +21,9 @@ let tokens = {
     refresh_token: {}
 };
 
-let me = []; 
+let me = [];
+
+let localPlaylist = {};
 
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
@@ -136,14 +138,18 @@ app.post('/createPlaylist/:name', (req, res) => {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + tokens.access_token,
-                'Content-Type': 'application/json'  
+                'Content-Type': 'application/json'
             },
             data: JSON.stringify(playlist)
         })
         .then(playlist => {
+            localPlaylist = playlist;
             console.log(playlist)
             res.json(playlist);
-        });
+        })
+        .catch(err => {
+            console.log(err);
+        })
 });
 
 app.post('/search-tracks', (req, res) => {
@@ -153,8 +159,24 @@ app.post('/search-tracks', (req, res) => {
 });
 
 app.post('/add-track', (req, res) => {
-    var trackId = req.body.term;
-    axios.post(`https://api.spotify.com/v1/users/${me.id}/playlists/${playlist_id}/tracks`)
+    var trackId = req.body.trackId;
+    console.log('PLAYLIST')
+    console.log(localPlaylist)
+    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify%${trackId}`;
+    console.log(url)
+    axios({
+        url: url,
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + tokens.access_token,
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        console.log(response);
+        res.json(response)
+    }).catch(err => {
+        console.log(err)
+    })
 })
 
 app.get('*', function(req, res) {

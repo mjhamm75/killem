@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { searchTracks } from './../actions/killem.actions.js';
+import { searchTracks, addTrack } from './../actions/killem.actions.js';
 import SearchResults from './../components/SearchResults';
 
 class SearchPage extends Component {
 	constructor(props) {
 		super(props);
 		this.searchTracks = this.searchTracks.bind(this);
+		this.addTrack = this.addTrack.bind(this);
 	}
 
 	render() {
@@ -21,7 +22,7 @@ class SearchPage extends Component {
 	}
 
 	addTrack(trackId) {
-		this.dispatch(addTrack(trackId));
+		this.props.dispatch(addTrack(trackId));
 	}
 
 	searchTracks(term) {
