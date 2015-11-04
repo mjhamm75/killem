@@ -152,6 +152,11 @@ app.post('/search-tracks', (req, res) => {
         .then(response => res.json(response));
 });
 
+app.post('/add-track', (req, res) => {
+    var trackId = req.body.term;
+    axios.post(`https://api.spotify.com/v1/users/${me.id}/playlists/${playlist_id}/tracks`)
+})
+
 app.get('*', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 });

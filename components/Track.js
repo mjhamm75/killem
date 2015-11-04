@@ -7,11 +7,11 @@ class Track extends Component {
 	}
 
 	addTrack(track) {
-		console.log(track)
+		this.props.addTrack(track.id);
 	}
 
 	render() {
-		return <div onClick={this.addTrack}>{this.props.track.name}</div>
+		return <div onClick={this.addTrack.bind(this, this.props.track)}>{this.props.track.name}</div>
 	}
 }
 

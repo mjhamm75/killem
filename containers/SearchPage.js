@@ -15,9 +15,13 @@ class SearchPage extends Component {
 				<h1>Search</h1>
 				<input ref="searchTerm"/>
 				<button onClick={this.searchTracks}>Search</button>
-				<SearchResults searchResults={this.props.searchResults}/>
+				<SearchResults searchResults={this.props.searchResults} addTrack={this.addTrack}/>
 			</div>
 		)
+	}
+
+	addTrack(trackId) {
+		this.dispatch(addTrack(trackId));
 	}
 
 	searchTracks(term) {

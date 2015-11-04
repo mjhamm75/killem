@@ -93,7 +93,7 @@ function createPlaylistSuccessful(playlist) {
 }
 
 export function searchTracks(term) {
-	return (dispatch) => {
+	return dispatch => {
 		dispatch(searchTracksRequest());
 		return axios.post('/search-tracks', {
 			term
@@ -122,5 +122,35 @@ function searchTrackSuccess(tracks) {
 function searchTracksFail() {
 	return {
 		type: AppConstants.SEARCH_TRACKS_FAIL
+	}
+}
+
+function addTrack(trackId) {
+	return dispatch => {
+		dispatch(addTrackRequest());
+		axios.post('/add-track', {
+			trackId: trackId
+		}).then(function(res) {
+			debugger;
+			dispatch(addTrackSuccess(res));
+		})
+	}
+}
+
+function addTrackRequest() {
+	return {
+		type: AppConstants.ADD_TRACK_REQUEST
+	}
+}
+
+function addTrackSuccess() {
+	return {
+		type: AppConstants.ADD_TRACK_SUCCESS
+	}
+}
+
+function addTrackFail() {
+	return {
+		type: AppConstants.ADD_TRACK_FAIL
 	}
 }
