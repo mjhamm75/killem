@@ -100,9 +100,9 @@ export function searchTracks(term) {
 		}).then(function(tracks){
 			dispatch(searchTrackSuccess(tracks));
 		})
-		// .catch(function(err) {
-		// 	dispatch(searchTracksFail());
-		// });
+		.catch(function(err) {
+			dispatch(searchTracksFail());
+		});
 	}
 }
 
