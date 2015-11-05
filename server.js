@@ -144,11 +144,10 @@ app.post('/createPlaylist/:name', (req, res) => {
         })
         .then(playlist => {
             localPlaylist = playlist;
-            console.log(playlist)
             res.json(playlist);
         })
         .catch(err => {
-            console.log(err);
+            console.error(err);
         })
 });
 
@@ -160,10 +159,7 @@ app.post('/search-tracks', (req, res) => {
 
 app.post('/add-track', (req, res) => {
     var trackId = req.body.trackId;
-    console.log('PLAYLIST')
-    console.log(localPlaylist)
     var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
-    console.log(url)
     axios({
         url: url,
         method: 'POST',
@@ -172,11 +168,24 @@ app.post('/add-track', (req, res) => {
             'Content-Type': 'application/json'
         }
     }).then(response => {
-        console.log(response);
         res.json(response)
     }).catch(err => {
-        console.log(err)
+        console.error(err)
     })
+})
+
+app.get('/playlist', (req, res) => {
+    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks`;
+    axios({
+        url: url,
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + tokens.access_token,
+            'Content-Type': 'application/json'            
+        }
+    }).then(response => {
+        res.json(response)
+    }).catch(err => console.log(err));
 })
 
 app.get('*', function(req, res) {

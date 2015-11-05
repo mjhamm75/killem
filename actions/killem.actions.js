@@ -132,6 +132,7 @@ export function addTrack(trackId) {
 			trackId: trackId
 		}).then(function(res) {
 			dispatch(addTrackSuccess(res));
+			dispatch(updatePlaylist());
 		})
 	}
 }
@@ -151,5 +152,35 @@ function addTrackSuccess() {
 function addTrackFail() {
 	return {
 		type: AppConstants.ADD_TRACK_FAIL
+	}
+}
+
+function updatePlaylist() {
+	return dispatch => {
+		dispatch(updatePlaylistRequest())
+		axios.get('playlist')
+			.then(res => {
+				dispatch(updatePlaylistSuccess(res))
+			})
+			.catch(() => updatePlaylistFail())
+	}
+}
+
+function updatePlaylistRequest() {
+	return {
+		type: AppConstants.UPDATE_PLAYLIST_REQUEST
+	}
+}
+
+function updatePlaylistFail() {
+	return {
+		type: AppConstants.UPDATE_PLAYLIST_FAIL
+	}
+}
+
+function updatePlaylistSuccess(playlist) {
+	return {
+		type: AppConstants.UPDATE_PLAYLIST_FAIL,
+		playlist
 	}
 }

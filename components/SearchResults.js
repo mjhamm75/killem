@@ -10,6 +10,7 @@ class SearchResults extends Component {
 		if(data) {
 			var artists = this.renderArtists(data.data.artists.items);
 			var tracks = this.renderTracks(data.data.tracks.items);
+			var playlist = this.renderPlaylist(data.data.playlist.tracks);
 		}
 		return (
 			<div>
@@ -40,6 +41,16 @@ class SearchResults extends Component {
 			});			
 		} else {
 			return <div>No Tracks Found</div>;
+		}
+	}
+
+	renderPlaylist(playlist) {
+		if(playlist.length > 0) {
+			return playlist.map(track => {
+				<div>{track.name}</div>
+			})
+		} else {
+			return <div>Playlist is empty</div>;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 import * as ActionTypes from '../actions';
 import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
-import { GET_ME_SUCCESS, GET_TOKENS_SUCCESS, SEARCH_TRACKS_SUCCESS } from './../constants/killem.constants.js';
+import { GET_ME_SUCCESS, GET_TOKENS_SUCCESS, SEARCH_TRACKS_SUCCESS, UPDATE_PLAYLIST_SUCCESS } from './../constants/killem.constants.js';
 
 // Updates error message to notify about the failed fetches.
 function errorMessage(state = null, action) {
@@ -43,9 +43,19 @@ function searchResults(state = {}, action) {
   }
 }
 
+function playlist(state = [], action) {
+  switch(action.type) {
+    case UPDATE_PLAYLIST_SUCCESS:
+      return action.playlist;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   errorMessage,
   me,
+  playlist,
   router,
   searchResults,
   tokens

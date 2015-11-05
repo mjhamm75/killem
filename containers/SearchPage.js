@@ -16,7 +16,7 @@ class SearchPage extends Component {
 				<h1>Search</h1>
 				<input ref="searchTerm"/>
 				<button onClick={this.searchTracks}>Search</button>
-				<SearchResults searchResults={this.props.searchResults} addTrack={this.addTrack}/>
+				<SearchResults searchResults={this.props.searchResults} addTrack={this.addTrack} playlist={this.props.playlist}/>
 			</div>
 		)
 	}
@@ -32,6 +32,7 @@ class SearchPage extends Component {
 
 function mapStateToProps(state) {
 	return {
+		playlist: state.playlist,
 		router: state.router,
 		searchResults: state.searchResults
 	}
