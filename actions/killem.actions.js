@@ -131,7 +131,6 @@ export function addTrack(trackId) {
 		axios.post('/add-track', {
 			trackId: trackId
 		}).then(function(res) {
-			debugger;
 			dispatch(addTrackSuccess(res));
 		})
 	}

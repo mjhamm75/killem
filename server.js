@@ -162,7 +162,7 @@ app.post('/add-track', (req, res) => {
     var trackId = req.body.trackId;
     console.log('PLAYLIST')
     console.log(localPlaylist)
-    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify%${trackId}`;
+    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
     console.log(url)
     axios({
         url: url,
