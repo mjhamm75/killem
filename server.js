@@ -16,6 +16,11 @@ var redirect_uri = 'http://localhost:8888/callback';
 import request from 'request';
 import axios from 'axios';
 
+var knex = require('knex')({
+    client: 'pg',
+    connection: 'postgres://killem:killem@localhost/killem'
+});
+
 let tokens = {
     access_token: {},
     refresh_token: {}
