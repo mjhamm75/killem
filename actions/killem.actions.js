@@ -177,7 +177,7 @@ function updatePlaylistFail() {
 
 function updatePlaylistSuccess(playlist) {
 	return {
-		type: AppConstants.UPDATE_PLAYLIST_FAIL,
+		type: AppConstants.UPDATE_PLAYLIST_SUCCESS,
 		playlist
 	}
 }
