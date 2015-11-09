@@ -15,6 +15,7 @@ var redirect_uri = 'http://localhost:8888/callback';
 
 import request from 'request';
 import axios from 'axios';
+import { searchTracks } from './db';
 
 var knex = require('knex')({
     client: 'pg',
@@ -63,7 +64,6 @@ app.get('/me', (req, res) => {
         headers: { 'Authorization': 'Bearer ' + tokens.access_token },
         json: true
     };
-
 
     // use the access token to access the Spotify Web API
     request.get(options, function(error, response, body) {
@@ -159,8 +159,10 @@ app.post('/createPlaylist/:name', (req, res) => {
 
 app.post('/search-tracks', (req, res) => {
     var term = req.body.term;
-    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`)
-        .then(response => res.json(response));
+    searchTracks(term).then(response => {
+        console.log(response);
+        res.json(response)
+    });
 });
 
 app.post('/add-track', (req, res) => {
