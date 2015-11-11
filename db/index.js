@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { generateRandomString } from './../utils/random.utils.js';
 
 export function searchTracks(term) {
 	var url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`;
@@ -7,6 +8,7 @@ export function searchTracks(term) {
 }
 
 export function login() {
+	var stateKey = 'spotify_auth_state';
 	var state = generateRandomString(16);
 	res.cookie(stateKey, state);
 
@@ -19,7 +21,6 @@ export function login() {
 		redirect_uri: redirect_uri,
 		state: state
 	});
-	res.json({
-		url: result
-	});
+
+	return result;
 }

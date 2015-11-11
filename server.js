@@ -3,8 +3,7 @@ var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config');
 var querystring = require('querystring');
-import { generateRandomString } from './utils/random.utils.js';
-var stateKey = 'spotify_auth_state';
+
 import bodyParser from 'body-parser';
 
 var app = new require('express')();
@@ -40,19 +39,10 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html');
 })
 
-app.get('/log-in', function(req, res) {
-	var state = generateRandomString(16);
-    res.cookie(stateKey, state);
 
-    var scope = 'user-read-private user-read-email playlist-modify-public';
-    var result = 'https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
-            response_type: 'code',
-            client_id: client_id,
-            scope: scope,
-            redirect_uri: redirect_uri,
-            state: state
-        });
+import { login } from './db';
+app.get('/log-in', function(req, res) {
+    var result = login();
     res.json({
         url: result
     });
