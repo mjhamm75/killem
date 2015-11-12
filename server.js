@@ -2,19 +2,15 @@ var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config');
-var querystring = require('querystring');
-
+import { generateRandomString } from './utils/random.utils.js';
+var stateKey = 'spotify_auth_state';
 import bodyParser from 'body-parser';
 
 var app = new require('express')();
 var port = 8888;
-var client_id = '3a40b9387b3c41b6847eefb37660f269';
-var client_secret = 'ad92eee0fb2743ea8b5974ae2ab93db1';
-var redirect_uri = 'http://localhost:8888/callback';
 
 import request from 'request';
 import axios from 'axios';
-import { searchTracks } from './db';
 
 var knex = require('knex')({
     client: 'pg',
@@ -36,36 +32,30 @@ app.use(webpackHotMiddleware(compiler));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index.html');
 })
-
 
 import { login } from './db';
 app.get('/log-in', function(req, res) {
-    var result = login();
+    var state = generateRandomString(16);
+    res.cookie(stateKey, state);
+    let result = login(state);
     res.json({
         url: result
     });
 })
 
+import { getMe } from './db';
 app.get('/me', (req, res) => {
-    var options = {
-        url: 'https://api.spotify.com/v1/me',
-        headers: { 'Authorization': 'Bearer ' + tokens.access_token },
-        json: true
-    };
-
-    // use the access token to access the Spotify Web API
-    request.get(options, function(error, response, body) {
-        if(error) {
-            console.error(error);
-        } else {
-            me = response.body;
-            res.json(response);            
-        }
-    });
+    getMe(tokens).then(response => {
+        me = response.data;
+        res.json(me);                    
+    }).catch(err => console.error(err));
 })
 
+var client_id = '3a40b9387b3c41b6847eefb37660f269';
+var client_secret = 'ad92eee0fb2743ea8b5974ae2ab93db1';
+var redirect_uri = 'http://localhost:8888/callback';
 app.get('/callback', (req, res) => {
     var code = req.query.code || null;
     var state = req.query.state || null;
@@ -149,10 +139,8 @@ app.post('/createPlaylist/:name', (req, res) => {
 
 app.post('/search-tracks', (req, res) => {
     var term = req.body.term;
-    searchTracks(term).then(response => {
-        console.log(response);
-        res.json(response)
-    });
+    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`)
+        .then(response => res.json(response));
 });
 
 app.post('/add-track', (req, res) => {
@@ -187,7 +175,7 @@ app.get('/playlist', (req, res) => {
 })
 
 app.get('*', function(req, res) {
-	res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.listen(port, function(error) {
