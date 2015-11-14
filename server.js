@@ -49,7 +49,9 @@ import { getMe } from './db';
 app.get('/me', (req, res) => {
     getMe(tokens).then(response => {
         me = response.data;
-        res.json(me);                    
+        // knex('users').insert({user_name: me.id, access_token: tokens.access_token, refresh_token: tokens.refresh_token}).then(() => {
+        //     res.json(me);                                
+        // })
     }).catch(err => console.error(err));
 })
 
@@ -78,9 +80,13 @@ app.get('/callback', (req, res) => {
     request.post(authOptions, (error, response, body) => {
         tokens.access_token = body.access_token;
         tokens.refresh_token = body.refresh_token;
-    });
 
-    res.redirect('/create');
+        getMe(tokens).then(me => {
+            knex('users').insert({user_name: me.data.id, access_token: tokens.access_token, refresh_token: tokens.refresh_token}).then(result => {
+                res.redirect('/create');                
+            })
+        })
+    });
 });
 
 app.get('/tokens', (req, res) => {
@@ -113,28 +119,15 @@ app.get('/refresh_token', (req, res) => {
     });
 });
 
+import { createPlaylist } from './db';
 app.post('/createPlaylist/:name', (req, res) => {
-    var playlist = {
-        name: 'TestList',
-        public: true
-    };
-
-    axios({
-            url: 'https://api.spotify.com/v1/users/' + me.id + '/playlists',
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + tokens.access_token,
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify(playlist)
-        })
-        .then(playlist => {
-            localPlaylist = playlist;
-            res.json(playlist);
-        })
-        .catch(err => {
-            console.error(err);
-        })
+    createPlaylist('testtest', me).then(playlist => {
+        localPlaylist = playlist;
+        res.json(playlist);
+    })
+    .catch(err => {
+        console.error(err);
+    })
 });
 
 app.post('/search-tracks', (req, res) => {

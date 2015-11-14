@@ -54,7 +54,7 @@ function playlist(state = [], action) {
 
 const rootReducer = combineReducers({
   errorMessage,
-  me,
+  me: me,
   playlist,
   router,
   searchResults,

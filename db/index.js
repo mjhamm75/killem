@@ -33,3 +33,20 @@ export function getMe(tokens) {
         json: true
     });
 }
+
+export function createPlaylist(name, me) {
+    var playlist = {
+        name: name,
+        public: true
+    };
+
+    return axios({
+        url: 'https://api.spotify.com/v1/users/' + me.id + '/playlists',
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + tokens.access_token,
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(playlist)
+    })
+}

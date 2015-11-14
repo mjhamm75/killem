@@ -30,7 +30,7 @@ export function getMe() {
 	return dispatch => {
 		dispatch(getMeRequest());
 		return isoFetch('/me').then(response => {
-			dispatch(getMeSuccess(response.body))
+			dispatch(getMeSuccess(response))
 		})		
 	}
 }
