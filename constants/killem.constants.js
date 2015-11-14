@@ -1,6 +1,8 @@
 export const ADD_TO_PLAYLIST = 'ADD_TO_PLAYLIST';
 export const SEARCH_MUSIC = 'SEARCH_MUSIC';
 export const LOGIN = 'LOGIN';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const GET_ME = 'GET_ME';
 export const GET_ME_REQUEST = 'GET_ME_REQUEST';
 export const GET_ME_SUCCESS = 'GET_ME_SUCCESS';
