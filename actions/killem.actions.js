@@ -99,7 +99,7 @@ export function searchTracks(term) {
 			term
 		}).then(function(tracks){
 			dispatch(searchTrackSuccess(tracks));
-		})
+		}).catch(err => console.log(err));
 	}
 }
 

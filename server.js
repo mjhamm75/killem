@@ -49,9 +49,6 @@ import { getMe } from './db';
 app.get('/me', (req, res) => {
     getMe(tokens).then(response => {
         me = response.data;
-        // knex('users').insert({user_name: me.id, access_token: tokens.access_token, refresh_token: tokens.refresh_token}).then(() => {
-        //     res.json(me);                                
-        // })
     }).catch(err => console.error(err));
 })
 

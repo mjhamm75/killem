@@ -11,7 +11,7 @@ class SearchResults extends Component {
 			var artists = this.renderArtists(data.data.artists.items);
 			var tracks = this.renderTracks(data.data.tracks.items);
 			if(this.props.playlist) {
-				var playlist = this.renderPlaylist(this.props.playlist.data.data.item);				
+				var playlist = this.renderPlaylist([]);
 			}
 		}
 		return (
