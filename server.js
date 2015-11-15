@@ -127,10 +127,9 @@ app.post('/createPlaylist/:name', (req, res) => {
     })
 });
 
+import { searchTracks } from './db';
 app.post('/search-tracks', (req, res) => {
-    var term = req.body.term;
-    axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`)
-        .then(response => res.json(response));
+    searchTracks(req.body.term).then(response => res.json(response));
 });
 
 app.post('/add-track', (req, res) => {
