@@ -61,3 +61,15 @@ export function getPlaylist(tokens) {
         }
     })
 }
+
+export function addTrack() {
+    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
+    return axios({
+        url: url,
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + tokens.access_token,
+            'Content-Type': 'application/json'
+        }
+    })
+}
