@@ -132,6 +132,7 @@ app.post('/search-tracks', (req, res) => {
     searchTracks(req.body.term).then(response => res.json(response));
 });
 
+import { addTrack } from './db';
 app.post('/add-track', (req, res) => {
     var trackId = req.body.trackId;
     var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
