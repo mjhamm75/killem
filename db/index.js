@@ -49,3 +49,15 @@ export function createPlaylist(name, me) {
         data: JSON.stringify(playlist)
     })
 }
+
+export function getPlaylist(tokens) {
+    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks`;
+    return axios({
+        url: url,
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + tokens.access_token,
+            'Content-Type': 'application/json'            
+        }
+    })
+}

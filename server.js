@@ -149,16 +149,9 @@ app.post('/add-track', (req, res) => {
     })
 })
 
+import { getPlaylist } from './db';
 app.get('/playlist', (req, res) => {
-    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks`;
-    axios({
-        url: url,
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + tokens.access_token,
-            'Content-Type': 'application/json'            
-        }
-    }).then(response => {
+    getPlaylist(tokens).then(response => {
         res.json(response)
     }).catch(err => console.log(err));
 })
