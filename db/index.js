@@ -10,6 +10,7 @@ var client_id = '3a40b9387b3c41b6847eefb37660f269';
 var client_secret = 'ad92eee0fb2743ea8b5974ae2ab93db1';
 var redirect_uri = 'http://localhost:8888/callback';
 var querystring = require('querystring');
+
 export function login(state) {
     var scope = 'user-read-private user-read-email playlist-modify-public';
     var result = 'https://accounts.spotify.com/authorize?' +
@@ -72,4 +73,46 @@ export function addTrack() {
             'Content-Type': 'application/json'
         }
     })
+}
+
+
+var knex = require('knex')({
+    client: 'pg',
+    connection: 'postgres://killem:killem@localhost/killem'
+});
+import request from 'request';
+var client_id = '3a40b9387b3c41b6847eefb37660f269';
+var client_secret = 'ad92eee0fb2743ea8b5974ae2ab93db1';
+var redirect_uri = 'http://localhost:8888/callback';
+export function callback(code, tokens, cb) {
+    // var state = req.query.state || null;
+    // var storedState = req.cookies ? req.cookies[stateKey] : null;
+
+    var authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        form: {
+            code: code,
+            redirect_uri: redirect_uri,
+            grant_type: 'authorization_code'
+        },
+        headers: {
+            'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        },
+        json: true
+    };
+
+    console.log('post request')
+    request.post(authOptions, (error, response, body) => {
+        console.log('post response')
+        tokens.access_token = body.access_token;
+        tokens.refresh_token = body.refresh_token;
+
+        getMe(tokens).then(me => {
+            console.log('get repsonse')
+            knex('users').insert({user_name: me.data.id, access_token: tokens.access_token, refresh_token: tokens.refresh_token}).then(result => {
+                console.log('db reuslt')
+                cb();
+            })
+        })
+    });
 }

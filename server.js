@@ -52,38 +52,16 @@ app.get('/me', (req, res) => {
     }).catch(err => console.error(err));
 })
 
-var client_id = '3a40b9387b3c41b6847eefb37660f269';
-var client_secret = 'ad92eee0fb2743ea8b5974ae2ab93db1';
-var redirect_uri = 'http://localhost:8888/callback';
+import { callback } from './db';
 app.get('/callback', (req, res) => {
     var code = req.query.code || null;
-    var state = req.query.state || null;
-    var storedState = req.cookies ? req.cookies[stateKey] : null;
-
     res.clearCookie(stateKey);
-    var authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        form: {
-            code: code,
-            redirect_uri: redirect_uri,
-            grant_type: 'authorization_code'
-        },
-        headers: {
-            'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-        },
-        json: true
-    };
 
-    request.post(authOptions, (error, response, body) => {
-        tokens.access_token = body.access_token;
-        tokens.refresh_token = body.refresh_token;
-
-        getMe(tokens).then(me => {
-            knex('users').insert({user_name: me.data.id, access_token: tokens.access_token, refresh_token: tokens.refresh_token}).then(result => {
-                res.redirect('/create');                
-            })
-        })
-    });
+    console.log('callback route')
+    callback(code, tokens, result => {
+        console.log('redirect create')
+        res.redirect('/create');
+    })
 });
 
 app.get('/tokens', (req, res) => {
