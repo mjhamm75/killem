@@ -43,7 +43,9 @@ app.get('/tokens', (req, res) => {
 
 import { refreshToken } from './db';
 app.get('/refresh_token', (req, res) => {
-    refreshToken();
+    refreshToken(23, result => {
+        res.json(result);
+    });
 });
 
 import { createPlaylist } from './db';

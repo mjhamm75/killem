@@ -106,30 +106,35 @@ export function callback(code, cb) {
     });
 }
 
-export function refreshToken() {
-    // requesting access token from refresh token
-    var refresh_token = req.query.refresh_token;
+export function refreshToken(userId, cb) {
+    
+    knex('users').where({ id: userId }).select('refresh_token').then(result => {
+        let refresh_token = result[0].refresh_token
 
-    var authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        headers: {
-            'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
-        },
-        form: {
-            grant_type: 'refresh_token',
-            refresh_token: refresh_token
-        },
-        json: true
-    };
+        var authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            headers: {
+                'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+            },
+            form: {
+                grant_type: 'refresh_token',
+                refresh_token: refresh_token
+            },
+            json: true
+        };
 
-    request.post(authOptions, (error, response, body) => {
-        if (!error && response.statusCode === 200) {
-            var access_token = body.access_token;
-            res.send({
-                'access_token': access_token
-            });
-        }
-    });
+        request.post(authOptions, (error, response, body) => {
+            if (!error && response.statusCode === 200) {
+                var access_token = body.access_token;
+                
+                knex('users').where('id', '=', userId).update({ access_token: access_token }).then(result => {
+                    cb({
+                        updated: true
+                    })
+                })
+            }
+        });
+    })
 }
 
 export function getTokens() {
