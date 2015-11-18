@@ -2,8 +2,9 @@ var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config');
-import { generateRandomString } from './utils/random.utils.js';
 var stateKey = 'spotify_auth_state';
+
+import { generateRandomString } from './utils/random.utils.js';
 import bodyParser from 'body-parser';
 
 var app = new require('express')();
@@ -45,21 +46,12 @@ app.get('/log-in', function(req, res) {
     });
 })
 
-import { getMe } from './db';
-app.get('/me', (req, res) => {
-    getMe(tokens).then(response => {
-        me = response.data;
-    }).catch(err => console.error(err));
-})
-
 import { callback } from './db';
 app.get('/callback', (req, res) => {
     var code = req.query.code || null;
     res.clearCookie(stateKey);
 
-    console.log('callback route')
     callback(code, tokens, result => {
-        console.log('redirect create')
         res.redirect('/create');
     })
 });
@@ -68,30 +60,9 @@ app.get('/tokens', (req, res) => {
   res.json(tokens);
 });
 
+import { refreshToken } from './db';
 app.get('/refresh_token', (req, res) => {
-
-    // requesting access token from refresh token
-    var refresh_token = req.query.refresh_token;
-    var authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        headers: {
-            'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-        },
-        form: {
-            grant_type: 'refresh_token',
-            refresh_token: refresh_token
-        },
-        json: true
-    };
-
-    request.post(authOptions, (error, response, body) => {
-        if (!error && response.statusCode === 200) {
-            var access_token = body.access_token;
-            res.send({
-                'access_token': access_token
-            });
-        }
-    });
+    refreshToken();
 });
 
 import { createPlaylist } from './db';
