@@ -6,9 +6,9 @@ var stateKey = 'spotify_auth_state';
 
 import { generateRandomString } from './utils/random.utils.js';
 import bodyParser from 'body-parser';
+import { PORT } from './config';
 
 var app = new require('express')();
-var PORT = 8888;
 
 import request from 'request';
 import axios from 'axios';

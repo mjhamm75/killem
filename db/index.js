@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { generateRandomString } from './../utils/random.utils.js';
-import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from './../config';
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SCOPE, knexInit } from './../config';
+
+var knex = knexInit();
 
 export function searchTracks(term) {
 	var url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`;
@@ -10,12 +12,11 @@ export function searchTracks(term) {
 var querystring = require('querystring');
 
 export function login(state) {
-    var scope = 'user-read-private user-read-email playlist-modify-public';
     var result = 'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
             client_id: CLIENT_ID,
-            scope: scope,
+            scope: SCOPE,
             redirect_uri: REDIRECT_URI,
             state: state
         });
@@ -72,12 +73,6 @@ export function addTrack() {
         }
     })
 }
-
-
-var knex = require('knex')({
-    client: 'pg',
-    connection: 'postgres://killem:killem@localhost/killem'
-});
 
 import request from 'request';
 export function callback(code, tokens, cb) {
