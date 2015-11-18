@@ -2,11 +2,10 @@ var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config');
-var stateKey = 'spotify_auth_state';
 
 import { generateRandomString } from './utils/random.utils.js';
 import bodyParser from 'body-parser';
-import { PORT } from './config';
+import { PORT, STATE_KEY } from './config';
 
 var app = new require('express')();
 
@@ -34,7 +33,7 @@ app.get('/', function(req, res) {
 import { login } from './db';
 app.get('/log-in', function(req, res) {
     var state = generateRandomString(16);
-    res.cookie(stateKey, state);
+    res.cookie(STATE_KEY, state);
     let result = login(state);
     res.json({
         url: result
@@ -44,7 +43,7 @@ app.get('/log-in', function(req, res) {
 import { callback } from './db';
 app.get('/callback', (req, res) => {
     var code = req.query.code || null;
-    res.clearCookie(stateKey);
+    res.clearCookie(STATE_KEY);
 
     callback(code, tokens, result => {
         res.redirect('/create');
