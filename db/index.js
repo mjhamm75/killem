@@ -131,3 +131,7 @@ export function refreshToken() {
         }
     });
 }
+
+export function getTokens() {
+    return knex('users').where({ id: 23 }).select('access_token', 'refresh_token');
+}

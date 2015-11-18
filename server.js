@@ -34,8 +34,11 @@ app.get('/callback', (req, res) => {
     })
 });
 
+import { getTokens } from './db';
 app.get('/tokens', (req, res) => {
-  res.json(tokens);
+    getTokens().then(tokens => {
+        res.json(tokens);        
+    });
 });
 
 import { refreshToken } from './db';
