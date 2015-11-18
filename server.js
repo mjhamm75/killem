@@ -15,7 +15,7 @@ app.use(webpackHotMiddleware(compiler));
 app.use(bodyParser.json());
 
 import { login } from './db';
-app.get('/log-in', function(req, res) {
+app.get('/log-in', (req, res) => {
     var state = generateRandomString(16);
     res.cookie(STATE_KEY, state);
     let result = login(state);
