@@ -75,7 +75,7 @@ export function addTrack() {
 }
 
 import request from 'request';
-export function callback(code, tokens, cb) {
+export function callback(code, cb) {
     // var state = req.query.state || null;
     // var storedState = req.cookies ? req.cookies[stateKey] : null;
 
@@ -93,11 +93,13 @@ export function callback(code, tokens, cb) {
     };
 
     request.post(authOptions, (error, response, body) => {
-        tokens.access_token = body.access_token;
-        tokens.refresh_token = body.refresh_token;
+        var tokens = {
+            access_token: body.access_token,
+            refresh_token: body.refresh_token
+        }
 
         getMe(tokens).then(me => {
-            knex('users').insert({user_name: me.data.id, access_token: tokens.access_token, refresh_token: tokens.refresh_token}).then(result => {
+            knex('users').insert({user_name: me.data.id, access_token: body.access_token, refresh_token: body.refresh_token}).then(result => {
                 cb();
             })
         })

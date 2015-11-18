@@ -1,26 +1,14 @@
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var config = require('./webpack.config');
-
+import request from 'request';
+import axios from 'axios';
 import { generateRandomString } from './utils/random.utils.js';
 import bodyParser from 'body-parser';
 import { PORT, STATE_KEY } from './config';
 
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var config = require('./webpack.config');
 var app = new require('express')();
-
-import request from 'request';
-import axios from 'axios';
-
-let tokens = {
-    access_token: {},
-    refresh_token: {}
-};
-
-let me = [];
-
-let localPlaylist = {};
-
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
 app.use(webpackHotMiddleware(compiler));
@@ -45,7 +33,7 @@ app.get('/callback', (req, res) => {
     var code = req.query.code || null;
     res.clearCookie(STATE_KEY);
 
-    callback(code, tokens, result => {
+    callback(code, result => {
         res.redirect('/create');
     })
 });
