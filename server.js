@@ -88,7 +88,7 @@ app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.listen(PORT, function(error) {
+app.listen(PORT, error => {
   if (error) {
     console.error(error);
   } else {
