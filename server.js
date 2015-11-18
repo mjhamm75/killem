@@ -84,7 +84,7 @@ app.get('/playlist', (req, res) => {
     }).catch(err => console.log(err));
 })
 
-app.get('*', function(req, res) {
+app.get('*', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
