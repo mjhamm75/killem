@@ -14,10 +14,6 @@ app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output
 app.use(webpackHotMiddleware(compiler));
 app.use(bodyParser.json());
 
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
-})
-
 import { login } from './db';
 app.get('/log-in', function(req, res) {
     var state = generateRandomString(16);
