@@ -8,7 +8,7 @@ import { generateRandomString } from './utils/random.utils.js';
 import bodyParser from 'body-parser';
 
 var app = new require('express')();
-var port = 8888;
+var PORT = 8888;
 
 import request from 'request';
 import axios from 'axios';
@@ -110,10 +110,10 @@ app.get('*', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.listen(port, function(error) {
+app.listen(PORT, function(error) {
   if (error) {
     console.error(error);
   } else {
-    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port);
+    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", PORT, PORT);
   }
 });
