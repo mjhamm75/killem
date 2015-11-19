@@ -33,21 +33,24 @@ export function getMe(tokens) {
     });
 }
 
-export function createPlaylist(name, me) {
+export function createPlaylist(name, userId) {
     var playlist = {
         name: name,
         public: true
     };
 
-    return axios({
-        url: 'https://api.spotify.com/v1/users/' + me.id + '/playlists',
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + tokens.access_token,
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(playlist)
-    })
+    return knex('users').where({id: userId}).select('user_name', 'access_token').then(res => {
+        return axios({
+            url: 'https://api.spotify.com/v1/users/' + res[0].user_name + '/playlists',
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + res[0].access_token,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(playlist)
+        })
+    });
+
 }
 
 export function getPlaylist(tokens) {
@@ -138,5 +141,5 @@ export function refreshToken(userId, cb) {
 }
 
 export function getTokens() {
-    return knex('users').where({ id: 23 }).select('access_token', 'refresh_token');
+    return knex('users').where({ id: 24 }).select('access_token', 'refresh_token');
 }
