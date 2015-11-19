@@ -65,16 +65,18 @@ export function getPlaylist(tokens) {
     })
 }
 
-export function addTrack() {
-    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
-    return axios({
-        url: url,
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + tokens.access_token,
-            'Content-Type': 'application/json'
-        }
-    })
+export function addTrack(trackId) {
+    return knex('users').where({id: userId}).select('user_name', 'access_token').then(res => {
+        var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
+        return axios({
+            url: url,
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + res[0].access_token,
+                'Content-Type': 'application/json'
+            }
+        })
+    });
 }
 
 import request from 'request';

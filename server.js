@@ -66,15 +66,7 @@ app.post('/search-tracks', (req, res) => {
 import { addTrack } from './db';
 app.post('/add-track', (req, res) => {
     var trackId = req.body.trackId;
-    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
-    axios({
-        url: url,
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + tokens.access_token,
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
+    addTrack(trackId).then(response => {
         res.json(response)
     }).catch(err => {
         console.error(err)
