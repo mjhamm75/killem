@@ -48,7 +48,9 @@ export function createPlaylist(name, userId) {
                 'Content-Type': 'application/json'
             },
             data: JSON.stringify(playlist)
-        })
+        }).then(res => {
+            return knex('users').where('id', '=', userId).update({ playlist_id: res.data.id })
+        });
     });
 
 }
@@ -66,8 +68,8 @@ export function getPlaylist(tokens) {
 }
 
 export function addTrack(trackId) {
-    return knex('users').where({id: userId}).select('user_name', 'access_token').then(res => {
-        var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${localPlaylist.data.id}/tracks?uris=spotify:track:${trackId}`;
+    return knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token').then(res => {
+        var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${res[0].playlist_id}/tracks?uris=spotify:track:${trackId}`;
         return axios({
             url: url,
             method: 'POST',
@@ -143,5 +145,5 @@ export function refreshToken(userId, cb) {
 }
 
 export function getTokens() {
-    return knex('users').where({ id: 24 }).select('access_token', 'refresh_token');
+    return knex('users').where({ id: 1 }).select('access_token', 'refresh_token');
 }

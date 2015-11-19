@@ -43,14 +43,14 @@ app.get('/tokens', (req, res) => {
 
 import { refreshToken } from './db';
 app.get('/refresh_token', (req, res) => {
-    refreshToken(24, result => {
+    refreshToken(1, result => {
         res.json(result);
     });
 });
 
 import { createPlaylist } from './db';
 app.post('/createPlaylist/:name', (req, res) => {
-    createPlaylist(req.params.name, 24).then(playlist => {
+    createPlaylist(req.params.name, 1).then(playlist => {
         res.json(playlist);
     })
     .catch(err => {
