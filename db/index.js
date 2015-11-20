@@ -55,16 +55,18 @@ export function createPlaylist(name, userId) {
 
 }
 
-export function getPlaylist(tokens) {
-    var url = `https://api.spotify.com/v1/users/${me.id}/playlists/${localPlaylist.data.id}/tracks`;
-    return axios({
-        url: url,
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + tokens.access_token,
-            'Content-Type': 'application/json'            
-        }
-    })
+export function getPlaylist(userId) {
+    knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token').then(res => {
+        var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${res[0].playlist_id}/tracks`;
+        return axios({
+            url: url,
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + res[0].access_token,
+                'Content-Type': 'application/json'            
+            }
+        })
+    });
 }
 
 export function addTrack(trackId) {

@@ -75,9 +75,10 @@ app.post('/add-track', (req, res) => {
 
 import { getPlaylist } from './db';
 app.get('/playlist', (req, res) => {
-    getPlaylist(tokens).then(response => {
-        res.json(response)
-    }).catch(err => console.log(err));
+    console.log(getPlaylist(1));
+    // getPlaylist(1).then(response => {
+    //     res.json(response)
+    // }).catch(err => console.log(err));
 })
 
 app.get('*', (req, res) => {
