@@ -69,7 +69,7 @@ export function getPlaylist(userId) {
     });
 }
 
-export function addTrack(trackId) {
+export function addTrack(trackId, userId) {
     return knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token').then(res => {
         var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${res[0].playlist_id}/tracks?uris=spotify:track:${trackId}`;
         return axios({

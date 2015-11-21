@@ -66,10 +66,11 @@ app.post('/search-tracks', (req, res) => {
 import { addTrack } from './db';
 app.post('/add-track', (req, res) => {
     var trackId = req.body.trackId;
-    addTrack(trackId).then(response => {
+    addTrack(trackId, 1).then(response => {
+        console.log(response);
         res.json(response)
     }).catch(err => {
-        console.error(err)
+        console.error('err', err);
     })
 })
 
