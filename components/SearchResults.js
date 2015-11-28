@@ -10,8 +10,8 @@ class SearchResults extends Component {
 		if(data) {
 			var artists = this.renderArtists(data.data.artists.items);
 			var tracks = this.renderTracks(data.data.tracks.items);
-			if(this.props.playlist) {
-				var playlist = this.renderPlaylist([]);
+			if(this.props.playlist.data) {
+				playlist = this.renderPlaylist(this.props.playlist.data);
 			}
 		}
 		return (
@@ -49,7 +49,7 @@ class SearchResults extends Component {
 	renderPlaylist(playlist) {
 		if(playlist.length > 0) {
 			return playlist.map(track => {
-				<div>{track.name}</div>
+				return <div>{track.track.name} - {track.track.artists[0].name}</div>
 			})
 		} else {
 			return <div>Playlist is empty</div>;

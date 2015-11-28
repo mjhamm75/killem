@@ -56,7 +56,7 @@ export function createPlaylist(name, userId) {
 }
 
 export function getPlaylist(userId) {
-    knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token').then(res => {
+    return knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token').then(res => {
         var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${res[0].playlist_id}/tracks`;
         return axios({
             url: url,

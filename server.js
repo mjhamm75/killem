@@ -48,7 +48,6 @@ app.get('/refresh_token', (req, res) => {
 
 import { createPlaylist } from './db';
 app.post('/createPlaylist/:name', (req, res) => {
-    console.log(req.params.name);
     createPlaylist(req.params.name, 1).then(playlist => {
         res.json(playlist);
     })
@@ -66,7 +65,6 @@ import { addTrack } from './db';
 app.post('/add-track', (req, res) => {
     var trackId = req.body.trackId;
     addTrack(trackId, 1).then(response => {
-        console.log(response);
         res.json(response)
     }).catch(err => {
         console.error('err', err);
@@ -75,10 +73,9 @@ app.post('/add-track', (req, res) => {
 
 import { getPlaylist } from './db';
 app.get('/playlist', (req, res) => {
-    console.log(getPlaylist(1));
-    // getPlaylist(1).then(response => {
-    //     res.json(response)
-    // }).catch(err => console.log(err));
+    getPlaylist(1).then(response => {
+        res.json(response.data.items);
+    })
 })
 
 import { getPlaylists } from './db';
