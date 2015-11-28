@@ -70,7 +70,9 @@ export function getPlaylist(userId) {
 }
 
 export function getPlaylists(userId) {
-    
+    return {
+        playlists: 0
+    }    
 }
 
 export function addTrack(trackId, userId) {
