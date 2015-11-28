@@ -71,10 +71,10 @@ function getTokensSuccess(tokens) {
 	}
 }
 
-export function createPlaylist() {
+export function createPlaylist(name) {
 	return (dispatch, getState) => {
 		dispatch(createPlaylistRequest());
-		return axios.post('/createPlaylist/Cracklist')
+		return axios.post(`/createPlaylist/${name}`)
 			.then(playlist => dispatch(createPlaylistSuccessful(playlist)));
 	}
 }

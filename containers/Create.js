@@ -11,12 +11,15 @@ class Create extends Component {
   }
 
   createPlaylist() {
-    this.props.dispatch(this.props.createPlaylist());
+    var name = this.refs.playlist.value;
+    this.props.dispatch(this.props.createPlaylist(name));
+    this.refs.playlist.value = '';
   }
   render() {
     return (
       <div>
         <h1>Create</h1>
+        <input ref="playlist"/>
         <button onClick={this.createPlaylist}>Create Playlist</button>
       </div>
     )

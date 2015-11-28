@@ -48,6 +48,7 @@ app.get('/refresh_token', (req, res) => {
 
 import { createPlaylist } from './db';
 app.post('/createPlaylist/:name', (req, res) => {
+    console.log(req.params.name);
     createPlaylist(req.params.name, 1).then(playlist => {
         res.json(playlist);
     })
@@ -81,7 +82,7 @@ app.get('/playlist', (req, res) => {
 })
 
 import { getPlaylists } from './db';
-app.get('playlists', (res, res) {
+app.get('playlists', (req, res) => {
     getPlaylists(1).then(playlists => {
         res.json(playlists);
     });
