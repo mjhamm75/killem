@@ -1,5 +1,3 @@
-import request from 'request';
-import axios from 'axios';
 import { generateRandomString } from './utils/random.utils.js';
 import bodyParser from 'body-parser';
 import { PORT, STATE_KEY } from './config';
