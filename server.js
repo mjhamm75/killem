@@ -82,6 +82,13 @@ app.get('/playlist', (req, res) => {
     // }).catch(err => console.log(err));
 })
 
+import { getPlaylists } from './db';
+app.get('playlists', (res, res) {
+    getPlaylists(1).then(playlists => {
+        res.json(playlists);
+    });
+})
+
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
