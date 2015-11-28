@@ -181,3 +181,13 @@ function updatePlaylistSuccess(playlist) {
 		playlist
 	}
 }
+
+export function getPlaylists() {
+	return dispatch => {
+		dispatch(updatePlaylistRequest())
+		axios.get('playlists')
+			.then(res => {
+				dispatch(updatePlaylistsSucess(res))
+			});
+	}
+}
