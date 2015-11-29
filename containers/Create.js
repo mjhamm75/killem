@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { createPlaylist, getMe, getTokens } from './../actions/killem.actions.js';
+import { createPlaylist, getPlaylists, getTokens } from './../actions/killem.actions.js';
 import { connect } from 'react-redux';
 
 class Create extends Component {
   constructor(props) {
     super(props);
     this.createPlaylist = this.createPlaylist.bind(this);
-    this.props.dispatch(getMe());
     this.props.dispatch(getTokens());
+    this.props.dispatch(getPlaylists());
   }
 
   createPlaylist() {
@@ -15,21 +15,34 @@ class Create extends Component {
     this.props.dispatch(this.props.createPlaylist(name));
     this.refs.playlist.value = '';
   }
+
   render() {
+    var playlists = this.props.playlists.data ? this.props.playlists.data : [];
+    var playlistDOM = this.renderPlaylists(playlists);
     return (
       <div>
         <h1>Create</h1>
         <input ref="playlist"/>
         <button onClick={this.createPlaylist}>Create Playlist</button>
+        <br />
+        <h2>Playlists</h2>
+        {playlistDOM}
       </div>
     )
+  }
+
+  renderPlaylists(playlists) {
+    return playlists.map(playlist => {
+      return <div key={playlist.playlist_id}>{playlist.playlist_name}</div>
+    });
   }
 }
 
 function mapStateToProps(state) {
   return {
     createPlaylist,
-    router: state.router
+    router: state.router,
+    playlists: state.playlists
   }
 }
 

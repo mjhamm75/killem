@@ -49,7 +49,7 @@ export function createPlaylist(name, userId) {
             },
             data: JSON.stringify(playlist)
         }).then(res => {
-            return knex('users').where('id', '=', userId).update({ playlist_id: res.data.id })
+            return knex('playlists').insert({ playlist_id: res.data.id, playlist_name: name, active_playlist: true, user_id: userId });
         });
     });
 
@@ -70,9 +70,7 @@ export function getPlaylist(userId) {
 }
 
 export function getPlaylists(userId) {
-    return {
-        playlists: 0
-    }    
+    return knex('playlists').where({user_id: userId}).select('playlist_name', 'playlist_id');
 }
 
 export function addTrack(trackId, userId) {

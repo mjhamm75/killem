@@ -79,7 +79,7 @@ app.get('/playlist', (req, res) => {
 })
 
 import { getPlaylists } from './db';
-app.get('playlists', (req, res) => {
+app.get('/playlists', (req, res) => {
     getPlaylists(1).then(playlists => {
         res.json(playlists);
     });

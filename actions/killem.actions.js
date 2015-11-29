@@ -75,7 +75,10 @@ export function createPlaylist(name) {
 	return (dispatch, getState) => {
 		dispatch(createPlaylistRequest());
 		return axios.post(`/createPlaylist/${name}`)
-			.then(playlist => dispatch(createPlaylistSuccessful(playlist)));
+			.then(playlist => {
+				dispatch(createPlaylistSuccessful(playlist));
+				dispatch(getPlaylists());
+			});
 	}
 }
 
@@ -184,10 +187,23 @@ function updatePlaylistSuccess(playlist) {
 
 export function getPlaylists() {
 	return dispatch => {
-		dispatch(updatePlaylistRequest())
+		dispatch(getPlaylistsRequest())
 		axios.get('playlists')
 			.then(res => {
-				dispatch(updatePlaylistsSucess(res))
+				dispatch(getPlaylistsSuccess(res))
 			});
+	}
+}
+
+function getPlaylistsRequest() {
+	return {
+		type: AppConstants.GET_PLAYLISTS_REQUEST
+	}
+}
+
+function getPlaylistsSuccess(playlists) {
+	return {
+		type: AppConstants.GET_PLAYLISTS_SUCCESS,
+		playlists
 	}
 }
