@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Observable } from 'rx';
 import { generateRandomString } from './../utils/random.utils.js';
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SCOPE, knexInit } from './../config';
 
