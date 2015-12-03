@@ -34,26 +34,30 @@ export function getMe(tokens) {
     });
 }
 
+function getCreatePlaylistObj(userName, accessToken, playlist) {
+    return {
+        url: 'https://api.spotify.com/v1/users/' + userName + '/playlists',
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(playlist)
+    }
+}
+
 export function createPlaylist(name, userId) {
     var playlist = {
         name: name,
         public: true
     };
 
-    return knex('users').where({id: userId}).select('user_name', 'access_token').then(res => {
-        return axios({
-            url: 'https://api.spotify.com/v1/users/' + res[0].user_name + '/playlists',
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + res[0].access_token,
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify(playlist)
-        }).then(res => {
-            return knex('playlists').insert({ playlist_id: res.data.id, playlist_name: name, active_playlist: true, user_id: userId });
-        });
-    });
-
+    return Observable
+        .fromPromise(knex('users').where({id: userId}).select('user_name', 'access_token'))
+        .map(res => getCreatePlaylistObj(res[0].user_name, res[0].access_token, playlist))
+        .concatMap(axios)
+        .concatMap(res => knex('playlists').insert({ playlist_id: res.data.id, playlist_name: name, active_playlist: true, user_id: userId }))
+        .toPromise();
 }
 
 export function getPlaylist(userId) {

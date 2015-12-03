@@ -49,10 +49,14 @@ app.get('/refresh_token', (req, res) => {
 import { createPlaylist } from './db';
 app.post('/createPlaylist/:name', (req, res) => {
     createPlaylist(req.params.name, 1).then(playlist => {
-        res.json(playlist);
+        res.json({
+            created: true
+        });
     })
     .catch(err => {
-        console.error(err);
+        res.json({
+            created: false
+        })
     })
 });
 
