@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>
