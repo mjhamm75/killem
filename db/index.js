@@ -105,12 +105,8 @@ export function addTrack(trackId, userId) {
         .toPromise();
 }
 
-import request from 'request';
-export function callback(code, cb) {
-    // var state = req.query.state || null;
-    // var storedState = req.cookies ? req.cookies[stateKey] : null;
-
-    var authOptions = {
+function getCallbackConfig(code) {
+    return {
         url: 'https://accounts.spotify.com/api/token',
         form: {
             code: code,
@@ -122,8 +118,14 @@ export function callback(code, cb) {
         },
         json: true
     };
+}
 
-    request.post(authOptions, (error, response, body) => {
+import request from 'request';
+export function callback(code, cb) {
+    // var state = req.query.state || null;
+    // var storedState = req.cookies ? req.cookies[stateKey] : null;
+
+    request.post(getCallbackConfig(code), (error, response, body) => {
         var tokens = {
             access_token: body.access_token,
             refresh_token: body.refresh_token
