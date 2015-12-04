@@ -85,18 +85,24 @@ export function getPlaylists(userId) {
     return knex('playlists').where({user_id: userId}).select('playlist_name', 'playlist_id');
 }
 
+function addTrackConfig(userName, playlistId, trackId, accessToken) {
+    return {
+        url: `https://api.spotify.com/v1/users/${userName}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+        }
+    }
+}
+
 export function addTrack(trackId, userId) {
-    return knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token').then(res => {
-        var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${res[0].playlist_id}/tracks?uris=spotify:track:${trackId}`;
-        return axios({
-            url: url,
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + res[0].access_token,
-                'Content-Type': 'application/json'
-            }
-        })
-    });
+    return Observable
+        .fromPromise(knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token'))
+        .flatMap(res => res)
+        .map(res => addTrackConfig(res.user_name, res.playlist_id, trackId, res.access_token))
+        .concatMap(axios)
+        .toPromise();
 }
 
 import request from 'request';
