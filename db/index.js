@@ -34,7 +34,7 @@ export function getMe(tokens) {
     });
 }
 
-function getCreatePlaylistObj(userName, accessToken, playlist) {
+function getCreatePlaylistConfig(userName, accessToken, playlist) {
     return {
         url: 'https://api.spotify.com/v1/users/' + userName + '/playlists',
         method: 'POST',
@@ -55,24 +55,30 @@ export function createPlaylist(name, userId) {
     return Observable
         .fromPromise(knex('users').where({id: userId}).select('user_name', 'access_token'))
         .flatMap(res => res)
-        .map(res => getCreatePlaylistObj(res.user_name, res.access_token, playlist))
+        .map(res => getCreatePlaylistConfig(res.user_name, res.access_token, playlist))
         .concatMap(axios)
         .concatMap(res => knex('playlists').insert({ playlist_id: res.data.id, playlist_name: name, active_playlist: true, user_id: userId }))
         .toPromise();
 }
 
+function getPlaylistsConfig(userName, playlistId, accessToken) {
+    return {
+        url: `https://api.spotify.com/v1/users/${userName}/playlists/${playlistId}/tracks`,
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'            
+        }
+    }
+}
+
 export function getPlaylist(userId) {
-    return knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token').then(res => {
-        var url = `https://api.spotify.com/v1/users/${res[0].user_name}/playlists/${res[0].playlist_id}/tracks`;
-        return axios({
-            url: url,
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + res[0].access_token,
-                'Content-Type': 'application/json'            
-            }
-        })
-    });
+    return Observable
+        .fromPromise(knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token'))
+        .flatMap(res => res)
+        .map(res => getPlaylistsConfig(res.user_name, res.playlist_id), res.access_token)
+        .concatMap(axios)
+        .toPromise();
 }
 
 export function getPlaylists(userId) {
