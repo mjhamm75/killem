@@ -54,7 +54,8 @@ export function createPlaylist(name, userId) {
 
     return Observable
         .fromPromise(knex('users').where({id: userId}).select('user_name', 'access_token'))
-        .map(res => getCreatePlaylistObj(res[0].user_name, res[0].access_token, playlist))
+        .flatMap(res => res)
+        .map(res => getCreatePlaylistObj(res.user_name, res.access_token, playlist))
         .concatMap(axios)
         .concatMap(res => knex('playlists').insert({ playlist_id: res.data.id, playlist_name: name, active_playlist: true, user_id: userId }))
         .toPromise();
