@@ -33,7 +33,6 @@
     "redux-logger": "0.0.1",
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^0.1.0",
-    "request": "^2.65.0",
     "rx": "^4.0.7"
   },
   "devDependencies": {
