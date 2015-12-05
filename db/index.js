@@ -122,9 +122,6 @@ function getCallbackConfig(code) {
 
 import request from 'request';
 export function callback(code, cb) {
-    // var state = req.query.state || null;
-    // var storedState = req.cookies ? req.cookies[stateKey] : null;
-
     request.post(getCallbackConfig(code), (error, response, body) => {
         var tokens = {
             access_token: body.access_token,
@@ -139,24 +136,26 @@ export function callback(code, cb) {
     });
 }
 
+function getRefreshTokenConfig(refreshToken) {
+    return {
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+            'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+        },
+        form: {
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken
+        },
+        json: true
+    };
+}
+
 export function refreshToken(userId, cb) {
     
     knex('users').where({ id: userId }).select('refresh_token').then(result => {
         let refresh_token = result[0].refresh_token
 
-        var authOptions = {
-            url: 'https://accounts.spotify.com/api/token',
-            headers: {
-                'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
-            },
-            form: {
-                grant_type: 'refresh_token',
-                refresh_token: refresh_token
-            },
-            json: true
-        };
-
-        request.post(authOptions, (error, response, body) => {
+        request.post(getRefreshTokenConfig(refresh_token), (error, response, body) => {
             if (!error && response.statusCode === 200) {
                 var access_token = body.access_token;
                 
