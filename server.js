@@ -27,7 +27,7 @@ app.get('/callback', (req, res) => {
     var code = req.query.code || null;
     res.clearCookie(STATE_KEY);
 
-    callback(code, result => {
+    callback(code).then(() => {
         res.redirect('/create');
     })
 });

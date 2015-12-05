@@ -25,13 +25,13 @@ export function login(state) {
     return result;
 }
 
-export function getMe(tokens) {
-    return axios({
+function getMe(accessToken) {
+    return Observable.fromPromise(axios({
         url: 'https://api.spotify.com/v1/me',
         method: 'GET',
-        headers: { 'Authorization': 'Bearer ' + tokens.access_token },
+        headers: { 'Authorization': 'Bearer ' + accessToken },
         json: true
-    });
+    }));
 }
 
 function getCreatePlaylistConfig(userName, accessToken, playlist) {
@@ -108,32 +108,39 @@ export function addTrack(trackId, userId) {
 function getCallbackConfig(code) {
     return {
         url: 'https://accounts.spotify.com/api/token',
-        form: {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: querystring.stringify({
             code: code,
             redirect_uri: REDIRECT_URI,
             grant_type: 'authorization_code'
-        },
-        headers: {
-            'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
-        },
+        }),
         json: true
     };
 }
 
-import request from 'request';
 export function callback(code, cb) {
-    request.post(getCallbackConfig(code), (error, response, body) => {
-        var tokens = {
-            access_token: body.access_token,
-            refresh_token: body.refresh_token
-        }
-
-        getMe(tokens).then(me => {
-            knex('users').insert({user_name: me.data.id, access_token: body.access_token, refresh_token: body.refresh_token}).then(result => {
-                cb();
-            })
+    var config = getCallbackConfig(code);
+    return Observable.fromPromise(axios(config))
+        .map(res => {
+            return {
+                accessToken: res.data.access_token,
+                refreshToken: res.data.refresh_token                
+            }
         })
-    });
+        .map(res => {
+            return {
+                me: getMe(res.accessToken).concat(),
+                accessToken: res.accessToken,
+                refreshToken: res.refreshToken                
+            }
+        })
+        .map(res => res)
+        .concatMap(res => knex('users').insert({user_name: res.me.id, access_token: res.accessToken, refresh_token: res.refreshToken}))
+        .toPromise();
 }
 
 function getRefreshTokenConfig(refreshToken) {
@@ -158,7 +165,6 @@ export function refreshToken(userId, cb) {
         .map(res => getRefreshTokenConfig(res.refresh_token))
         .concatMap(axios)
         .map(res => res.data.access_token)
-        .do(res => console.log(res))
         .concatMap(res => knex('users').where('id', '=', userId).update({ access_token: res }))
         .toPromise();
 }
