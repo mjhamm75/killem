@@ -139,34 +139,28 @@ export function callback(code, cb) {
 function getRefreshTokenConfig(refreshToken) {
     return {
         url: 'https://accounts.spotify.com/api/token',
+        method: 'POST',
         headers: {
-            'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+            'Authorization': 'Basic ' + (new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')),
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        form: {
+        data: querystring.stringify({
             grant_type: 'refresh_token',
             refresh_token: refreshToken
-        },
+        }),
         json: true
     };
 }
 
 export function refreshToken(userId, cb) {
-    
-    knex('users').where({ id: userId }).select('refresh_token').then(result => {
-        let refresh_token = result[0].refresh_token
-
-        request.post(getRefreshTokenConfig(refresh_token), (error, response, body) => {
-            if (!error && response.statusCode === 200) {
-                var access_token = body.access_token;
-                
-                knex('users').where('id', '=', userId).update({ access_token: access_token }).then(result => {
-                    cb({
-                        updated: true
-                    })
-                })
-            }
-        });
-    })
+    return Observable.fromPromise(knex('users').where({ id: userId }).select('refresh_token'))
+        .flatMap(res => res)
+        .map(res => getRefreshTokenConfig(res.refresh_token))
+        .concatMap(axios)
+        .map(res => res.data.access_token)
+        .do(res => console.log(res))
+        .concatMap(res => knex('users').where('id', '=', userId).update({ access_token: res }))
+        .toPromise();
 }
 
 export function getTokens() {

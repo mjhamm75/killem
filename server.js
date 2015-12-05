@@ -41,8 +41,10 @@ app.get('/tokens', (req, res) => {
 
 import { refreshToken } from './db';
 app.get('/refresh_token', (req, res) => {
-    refreshToken(1, result => {
-        res.json(result);
+    refreshToken(1).then(response => {
+        res.json({
+            created: true
+        })
     });
 });
 
