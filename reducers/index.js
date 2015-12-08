@@ -1,13 +1,12 @@
-import * as ActionTypes from '../actions';
 import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
-import { GET_ME_SUCCESS, GET_PLAYLISTS_SUCCESS, GET_TOKENS_SUCCESS, SEARCH_TRACKS_SUCCESS, UPDATE_PLAYLIST_SUCCESS } from './../constants/killem.constants.js';
+import { GET_ME_SUCCESS, GET_PLAYLISTS_SUCCESS, GET_TOKENS_SUCCESS, RESET_ERROR_MESSAGE, SEARCH_TRACKS_SUCCESS, UPDATE_PLAYLIST_SUCCESS } from './../constants/killem.constants.js';
 
 // Updates error message to notify about the failed fetches.
 function errorMessage(state = null, action) {
   const { type, error } = action;
 
-  if (type === ActionTypes.RESET_ERROR_MESSAGE) {
+  if (type === RESET_ERROR_MESSAGE) {
     return null;
   } else if (error) {
     return action.error;

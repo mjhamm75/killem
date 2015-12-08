@@ -1,13 +1,12 @@
 import * as AppConstants from './../constants/killem.constants.js';
-import { isoFetch } from './../utils/fetch.utils.js';
 import axios from 'axios';
 
 export function login(history) {	
 	return dispatch => {
 		dispatch(loginRequest());
-		return isoFetch('/log-in')
+		return axios.get('/log-in')
 			.then(response => {
-				dispatch(loginSuccessful(history, response.url));
+				dispatch(loginSuccessful(history, response.data.url));
 			})
 	}
 }
@@ -29,7 +28,7 @@ function loginSuccessful(history, url) {
 export function getMe() {
 	return dispatch => {
 		dispatch(getMeRequest());
-		return isoFetch('/me').then(response => {
+		return axios.get('/me').then(response => {
 			dispatch(getMeSuccess(response))
 		})		
 	}
@@ -51,7 +50,7 @@ function getMeSuccess(me) {
 export function getTokens() {
 	return dispatch => {
 		dispatch(getTokensRequest())
-		return isoFetch('/tokens')
+		return axios.get('/tokens')
 			.then(tokens => {
 				dispatch(getTokensSuccess(tokens))
 			});
