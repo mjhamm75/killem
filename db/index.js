@@ -139,7 +139,6 @@ export function callback(code, cb) {
             }
         })
         .map(res => res)
-        .do(res => console.log(res))
         .concatMap(res => knex('users').insert({user_name: res.me.id, access_token: res.accessToken, refresh_token: res.refreshToken}))
         .toPromise();
 }
