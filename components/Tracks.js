@@ -18,7 +18,7 @@ class Tracks extends Component {
 
 	renderTracks(tracks) {
 		return tracks.map(track => {
-				return <Track key={track.id} track={track} />
+				return <Track key={track.id} track={track} addTrack={this.props.addTrack}/>
 		});
 	}
 }

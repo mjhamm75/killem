@@ -24,7 +24,7 @@ class SearchResults extends Component {
 				<h2>Artists</h2>
 					<Artists artists={artists} />
 				<h2>Tracks</h2>
-					<Tracks tracks={tracks} />
+					<Tracks tracks={tracks} addTrack={this.props.addTrack}/>
 			</div>
 		)
 	}
