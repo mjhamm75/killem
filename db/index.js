@@ -132,8 +132,8 @@ export function callback(code, cb) {
             }
         })
         .flatMap(res => {
-            return getMe(res.accessToken).map(res2 => {
-                res.me = res2.data;
+            return getMe(res.accessToken).map(me => {
+                res.me = me.data;
                 return res;
             })
         })
