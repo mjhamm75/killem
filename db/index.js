@@ -131,14 +131,12 @@ export function callback(code, cb) {
                 refreshToken: res.data.refresh_token                
             }
         })
-        .map(res => {
-            return {
-                me: getMe(res.accessToken).concat(),
-                accessToken: res.accessToken,
-                refreshToken: res.refreshToken                
-            }
+        .flatMap(res => {
+            return getMe(res.accessToken).map(res2 => {
+                res.me = res2.data;
+                return res;
+            })
         })
-        .map(res => res)
         .concatMap(res => knex('users').insert({user_name: res.me.id, access_token: res.accessToken, refresh_token: res.refreshToken}))
         .toPromise();
 }
