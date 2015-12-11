@@ -74,9 +74,9 @@ function getPlaylistsConfig(userName, playlistId, accessToken) {
 
 export function getPlaylist(userId) {
     return Observable
-        .fromPromise(knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token'))
+        .fromPromise(knex.from('users').innerJoin('playlists', 'users.id', 'playlists.user_id').where({"users.id": userId}))
         .flatMap(res => res)
-        .map(res => getPlaylistsConfig(res.user_name, res.playlist_id), res.access_token)
+        .map(res => getPlaylistsConfig(res.user_name, res.playlist_id, res.access_token))
         .concatMap(axios)
         .toPromise();
 }
@@ -96,9 +96,9 @@ function addTrackConfig(userName, playlistId, trackId, accessToken) {
     }
 }
 
-export function addTrack(trackId, userId) {
+export function addTrack(trackId, userId, playlistId) {
     return Observable
-        .fromPromise(knex('users').where({id: userId}).select('user_name', 'playlist_id', 'access_token'))
+        .fromPromise(knex.from('users').innerJoin('playlists', 'users.id', 'playlists.user_id').where({"users.id": userId}))
         .flatMap(res => res)
         .map(res => addTrackConfig(res.user_name, res.playlist_id, trackId, res.access_token))
         .concatMap(axios)
