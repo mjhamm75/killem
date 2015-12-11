@@ -62,6 +62,21 @@ app.post('/createPlaylist/:name', (req, res) => {
     })
 });
 
+import { activatePlaylist } from './db';
+app.post('/activate', (req, res) => {
+    let playlistId = req.body.playlistId;
+    activatePlaylist(playlistId, 1).then(playlists => {
+        res.json({
+            playlists
+        })
+    })
+    .catch(err => {
+        res.json({
+            err
+        })
+    })
+})
+
 import { searchTracks } from './db';
 app.post('/search-tracks', (req, res) => {
     searchTracks(req.body.term).then(response => res.json(response));

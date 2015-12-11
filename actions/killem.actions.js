@@ -1,6 +1,31 @@
 import * as AppConstants from './../constants/killem.constants.js';
 import axios from 'axios';
 
+function activatePlaylistRequest() {
+	return {
+		type: AppConstants.ACTIVATE_PLAYLIST_REQUEST
+	}
+}
+
+function activatePlaylistSuccess(playlist) {
+	return {
+		type: AppConstants.ACTIVATE_PLAYLIST_SUCCESS,
+		playlist
+	}
+}
+
+export function activatePlaylist(playlistId) {
+	return dispatch => {
+		dispatch(activatePlaylistRequest());
+		return axios.post('/activate', {
+			playlistId	
+		})
+		.then(playlists => {
+			dispatch(activatePlaylistSuccess(playlists))
+		})
+	}
+}
+
 export function login(history) {	
 	return dispatch => {
 		dispatch(loginRequest());

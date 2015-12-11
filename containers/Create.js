@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { createPlaylist, getPlaylists, getTokens } from './../actions/killem.actions.js';
+import { activatePlaylist, createPlaylist, getPlaylists, getTokens } from './../actions/killem.actions.js';
 import { connect } from 'react-redux';
 
 class Create extends Component {
@@ -31,9 +31,13 @@ class Create extends Component {
     )
   }
 
+  activatePlaylist(playlistId) {
+    this.props.dispatch(activatePlaylist(playlistId));
+  }
+
   renderPlaylists(playlists) {
     return playlists.map(playlist => {
-      return <div key={playlist.playlist_id}>{playlist.playlist_name}</div>
+      return <div key={playlist.playlist_id} onClick={this.activatePlaylist.bind(this, playlist.playlist_id)}>{playlist.playlist_name}</div>
     });
   }
 }

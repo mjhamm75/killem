@@ -3,14 +3,20 @@ import { Observable } from 'rx';
 import { generateRandomString } from './../utils/random.utils.js';
 import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SCOPE, knexInit } from './../config';
 
+var querystring = require('querystring');
 var knex = knexInit();
 
-export function searchTracks(term) {
-	var url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`;
-	return axios.get(url);
+export function activatePlaylist(playlistId, userId) {
+    return Observable.fromPromise(knex.from('users').innerJoin('playlists', 'users.id', 'playlists.user_id').where({"users.id": userId}))
+        .do(res => console.log(res))
+        .toPromise();
 }
 
-var querystring = require('querystring');
+export function searchTracks(term) {
+    var url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(term)}&type=artist,track`;
+    return axios.get(url);
+}
+
 
 export function login(state) {
     var result = 'https://accounts.spotify.com/authorize?' +
