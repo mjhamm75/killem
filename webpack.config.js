@@ -27,7 +27,6 @@ module.exports = {
   }
 };
 
-
 // When inside Redux repo, prefer src to compiled version.
 // You can safely delete these lines in your project.
 var reduxSrc = path.join(__dirname, '..', '..', 'src');
