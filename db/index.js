@@ -7,7 +7,6 @@ var querystring = require('querystring');
 var knex = knexInit();
 
 export function activatePlaylist(playlistId, userId) {
-    console.log(playlistId);
     return Observable.fromPromise(knex('playlists').where({ user_id: userId }).update({ active_playlist: false }))
         .concatMap(knex('playlists').where({ user_id: userId, playlist_id: playlistId }).update({ active_playlist: true }))
         .concatMap(knex.from('users').innerJoin('playlists', 'users.id', 'playlists.user_id').where({"users.id": userId}))
