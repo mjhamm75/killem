@@ -1,6 +1,6 @@
 import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
-import { GET_ME_SUCCESS, GET_PLAYLISTS_SUCCESS, GET_TOKENS_SUCCESS, RESET_ERROR_MESSAGE, SEARCH_TRACKS_SUCCESS, UPDATE_PLAYLIST_SUCCESS } from './../constants/killem.constants.js';
+import { ACTIVATE_PLAYLIST_SUCCESS, GET_ME_SUCCESS, GET_PLAYLISTS_SUCCESS, GET_TOKENS_SUCCESS, RESET_ERROR_MESSAGE, SEARCH_TRACKS_SUCCESS, UPDATE_PLAYLIST_SUCCESS } from './../constants/killem.constants.js';
 
 // Updates error message to notify about the failed fetches.
 function errorMessage(state = null, action) {

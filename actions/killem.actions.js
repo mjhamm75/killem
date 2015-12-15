@@ -21,7 +21,8 @@ export function activatePlaylist(playlistId) {
 			playlistId	
 		})
 		.then(playlists => {
-			dispatch(activatePlaylistSuccess(playlists))
+			dispatch(activatePlaylistSuccess(playlists));
+			dispatch(getPlaylists());
 		})
 	}
 }
