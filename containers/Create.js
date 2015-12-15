@@ -37,7 +37,7 @@ class Create extends Component {
 
   renderPlaylists(playlists) {
     return playlists.map(playlist => {
-      return <div key={playlist.playlist_id} onClick={this.activatePlaylist.bind(this, playlist.playlist_id)}>{playlist.playlist_name}</div>
+      return <div key={playlist.playlist_id} onClick={this.activatePlaylist.bind(this, playlist.playlist_id)}>{playlist.playlist_name} - {playlist.active_playlist.toString()}</div>
     });
   }
 }
