@@ -89,7 +89,7 @@ export function getPlaylist(userId) {
 }
 
 export function getPlaylists(userId) {
-    return knex('playlists').where({user_id: userId}).select('playlist_name', 'playlist_id');
+    return knex('playlists').where({user_id: userId}).select('playlist_name', 'playlist_id', 'active_playlist');
 }
 
 function addTrackConfig(userName, playlistId, trackId, accessToken) {
