@@ -79,12 +79,30 @@ function getPlaylistsConfig(userName, playlistId, accessToken) {
     }
 }
 
+function axiosObservable(config) {
+    return Observable.fromPromise(axios(config));
+}
+
 export function getPlaylist(userId) {
     return Observable
-        .fromPromise(knex.from('users').innerJoin('playlists', 'users.id', 'playlists.user_id').where({"users.id": userId}))
+        .fromPromise(knex.from('users').innerJoin('playlists', 'users.id', 'playlists.user_id').where({"users.id": userId, "playlists.active_playlist": true}))
         .flatMap(res => res)
-        .map(res => getPlaylistsConfig(res.user_name, res.playlist_id, res.access_token))
-        .concatMap(axios)
+        .map(res => {
+            return {
+                config: getPlaylistsConfig(res.user_name, res.playlist_id, res.access_token),
+                name: res.playlist_name
+            }
+        })
+        .flatMap(res => {
+            return axiosObservable(res.config).map(playlist => {
+                console.log(playlist)
+                var result = {
+                    name: res.name,
+                    songs: playlist.data.items
+                }
+                return result;
+            });
+        })
         .toPromise();
 }
 

@@ -95,7 +95,7 @@ app.post('/add-track', (req, res) => {
 import { getPlaylist } from './db';
 app.get('/playlist', (req, res) => {
     getPlaylist(1).then(response => {
-        res.json(response.data.items);
+        res.json(response);
     })
 })
 

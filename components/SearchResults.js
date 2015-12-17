@@ -19,8 +19,8 @@ class SearchResults extends Component {
 		}
 		return (
 			<div>
-				<h2>Playlist</h2>
-					<Playlist playlist={playlist} />
+				<h2>Playlist - {playlist.name}</h2>
+					<Playlist songs={playlist.songs || []} />
 				<h2>Artists</h2>
 					<Artists artists={artists} />
 				<h2>Tracks</h2>

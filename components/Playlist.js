@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 class Playlist extends Component {
 	render() {
-		var playlist = this.props.playlist;
-		if(playlist.length > 0) {
-			var playlistDom = this.renderPlaylist(playlist);
+		var songs = this.props.songs;
+		if(songs.length > 0) {
+			var playlistDom = this.renderPlaylist(songs);
 			return (
 				<div>
 					{playlistDom}
@@ -15,9 +15,9 @@ class Playlist extends Component {
 		}
 	}
 
-	renderPlaylist(playlist) {
-		return playlist.map(track => {
-				return <div key={track.id}>{track.track.name} - {track.track.artists[0].name}</div>
+	renderPlaylist(songs) {
+		return songs.map(song => {
+				return <div key={song.id}>{song.track.name} - {song.track.artists[0].name}</div>
 		});		
 	}
 }
