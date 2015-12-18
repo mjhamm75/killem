@@ -17,9 +17,13 @@ class SearchResults extends Component {
 				playlist = this.props.playlist.data;
 			}
 		}
+		var playlistAndSeperator;
+		if(playlist) {
+			playlistAndSeperator = `- ${playlist.name}`
+		}
 		return (
 			<div>
-				<h2>Playlist - {playlist.name}</h2>
+				<h2>Playlist {playlistAndSeperator}}</h2>
 					<Playlist songs={playlist.songs || []} />
 				<h2>Artists</h2>
 					<Artists artists={artists} />
