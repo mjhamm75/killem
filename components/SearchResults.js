@@ -23,7 +23,7 @@ class SearchResults extends Component {
 		}
 		return (
 			<div>
-				<h2>Playlist {playlistAndSeperator}}</h2>
+				<h2>Playlist {playlistAndSeperator}</h2>
 					<Playlist songs={playlist.songs || []} />
 				<h2>Artists</h2>
 					<Artists artists={artists} />
