@@ -17,8 +17,8 @@ class SearchResults extends Component {
 				playlist = this.props.playlist.data;
 			}
 		}
-		var playlistAndSeperator;
-		if(playlist) {
+		var playlistAndSeperator = "";
+		if(playlist.name) {
 			playlistAndSeperator = `- ${playlist.name}`
 		}
 		return (
