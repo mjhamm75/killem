@@ -17,6 +17,7 @@ app.get('/log-in', (req, res) => {
     var state = generateRandomString(16);
     res.cookie(STATE_KEY, state);
     let result = login(state);
+    console.log(result);
     res.json({
         url: result
     });
