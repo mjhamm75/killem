@@ -44,7 +44,7 @@ function loginRequest() {
 }
 
 function loginSuccessful(history, url) {
-	location.replace(url);
+	// location.replace(url);
 	return {
 		type: AppConstants.LOGIN_SUCCESS,
 		url: url
