@@ -3,7 +3,7 @@ import Vote from './Vote';
 
 const Track = ({addTrack, track}) => (
 	<div>
-		<div onClick={() => addTrack(track.id)}>{track.name}</div><Vote />
+		<Vote sign="-"/><div onClick={() => addTrack(track.id)}>{track.name}</div><Vote sign="+"/>
 	</div>
 )
 

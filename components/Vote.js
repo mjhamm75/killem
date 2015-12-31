@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Vote = ({update}) => (
-	<div onClick={update}>+</div>
+const Vote = ({update, sign}) => (
+	<div onClick={update}>{sign}</div>
 )
 
 export default Vote;
