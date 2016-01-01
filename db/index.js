@@ -18,7 +18,6 @@ export function searchTracks(term) {
     return axios.get(url);
 }
 
-
 export function login(state) {
     var result = 'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
