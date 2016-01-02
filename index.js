@@ -11,7 +11,7 @@ render(
   <Provider store={store}>
     <ReduxRouter />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('app')
 );
 
 if (process.env.NODE_ENV !== 'production') {
